@@ -10,7 +10,7 @@
       <el-main><Home /></el-main>
     </el-container>
 
-    <el-footer></el-footer>
+    <el-footer><Footer /></el-footer>
   </el-container>
   
 </template>
@@ -19,10 +19,11 @@
 import Home from "./components/Home.vue";
 import Header from "./components/Header.vue";
 import Sidebar from "./components/Sidebar.vue";
+import Footer from "./components/Footer.vue";
 
 export default {
   name: 'App',
-  components: { Home, Header, Sidebar},
+  components: { Home, Header, Sidebar, Footer},
 }
 </script>
 
@@ -33,7 +34,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  //min-height: 100vh;
 }
 
 #main_container {
@@ -60,10 +60,6 @@ export default {
   color: #333;
   text-align: center;
   line-height: 160px;
-}
-
-body > .el-container {
-  margin-bottom: 40px;
 }
 
 </style>

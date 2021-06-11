@@ -1,18 +1,19 @@
 <template>
-    <h3>Home</h3>
-    <el-row>
-        <el-button type="primary">Primary</el-button>
+    <el-row type="flex"> 
+        <Card />
     </el-row>
+
 </template>
 
 <script>
+import Card from "./Card.vue";
+
 export default {
     name: "Home",
-    // setup() {
-    //     return {
-
-    //     }
-    // },
+    setup() {
+        
+    },
+    components: { Card, },
 }
 </script>
 

@@ -1,16 +1,16 @@
 <template>
 
-  <el-container>
+  <el-container id="main_container">
     <el-header>
       <Header />
     </el-header>
 
     <el-container>
-      <el-aside width="200px">Aside</el-aside>
+      <el-aside width="200px"><Sidebar /></el-aside>
       <el-main><Home /></el-main>
     </el-container>
 
-    <el-footer>Footer</el-footer>
+    <el-footer></el-footer>
   </el-container>
   
 </template>
@@ -18,10 +18,11 @@
 <script>
 import Home from "./components/Home.vue";
 import Header from "./components/Header.vue";
+import Sidebar from "./components/Sidebar.vue";
 
 export default {
   name: 'App',
-  components: { Home, Header, },
+  components: { Home, Header, Sidebar},
 }
 </script>
 
@@ -32,6 +33,11 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  //min-height: 100vh;
+}
+
+#main_container {
+  min-height: 100vh;
 }
 
 .el-header, .el-footer {
@@ -41,11 +47,12 @@ export default {
   line-height: 60px;
 }
 
+.el-footer {
+  margin-top: auto;
+}
+
 .el-aside {
   background-color: #D3DCE6;
-  color: #333;
-  text-align: center;
-  line-height: 200px;
 }
 
 .el-main {

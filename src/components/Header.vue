@@ -1,8 +1,8 @@
 <template>
     <el-menu mode="horizontal" background-color="#409EFF">
-        <h4>Cookbook</h4>
+        <el-menu-item index="1">Cookbook</el-menu-item>
+
     </el-menu>
-    <div class="hiall">Hi all</div>
 </template>
 
 <script>
@@ -12,7 +12,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .hiall {
-        margin: 0 auto;
+    .el-menu-item {
+        color: white;
+        font-size: 20px;
     }
 </style>

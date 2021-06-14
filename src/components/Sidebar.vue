@@ -1,24 +1,26 @@
 <template>
     <el-row type="flex" justify="center" class="title">    
-        Recepies
+        Our chefs
     </el-row>
 
-
     <el-menu>        
-        <el-menu-item index="1">Breakfast Casserole</el-menu-item>
-        <el-menu-item index="1">Giada's Chicken Saltimbocca</el-menu-item>
-        <el-menu-item index="1">Sloppy Joes</el-menu-item>
-        <el-menu-item index="1">Healthified Broccoli Cheddar Soup</el-menu-item>
-        <el-menu-item index="1">Frozen Fruit Smoothies</el-menu-item>
-
+        <el-menu-item index="1" v-for="recipe in state.recipes" :key="recipe.id">{{recipe.user}}</el-menu-item>
     </el-menu>
     
 </template>
 
 <script>
+import { recipes } from "../mock_data/mock_db";
+import { reactive } from "vue";
 export default {
     setup() {
-        
+        const state = reactive({
+            recipes: recipes,
+        });
+
+        return {
+            state,
+        }
     },
 }
 </script>

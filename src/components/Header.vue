@@ -2,12 +2,16 @@
     <el-row type="flex" justify="space-between" align="middle">
         <el-col :span="12" >
             <el-row type="flex" align="middle" justify="start" class="title">
-                Cookbook
+                <router-link to="/">
+                    Cookbook
+                </router-link>
             </el-row>
         </el-col>
         <el-col :span="12">
             <el-row type="flex" align="middle" justify="end">
-                <el-avatar :size="50" :src="state.circleUrl"></el-avatar>
+                <router-link to="/login">
+                    <el-avatar :size="50" :src="state.circleUrl"></el-avatar>
+                </router-link>
             </el-row>
         </el-col>
     </el-row>

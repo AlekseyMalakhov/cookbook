@@ -1,14 +1,11 @@
-<template>
-
+<template> 
   <el-container id="main_container">
     <el-header>
       <Header />
     </el-header>
 
-    <el-container>
-      <el-aside width="200px"><Sidebar /></el-aside>
-      <el-main><CardList /></el-main>
-    </el-container>
+    <router-view />
+    
 
     <el-footer><Footer /></el-footer>
   </el-container>
@@ -16,14 +13,12 @@
 </template>
 
 <script>
-import CardList from "./components/CardList.vue";
 import Header from "./components/Header.vue";
-import Sidebar from "./components/Sidebar.vue";
 import Footer from "./components/Footer.vue";
 
 export default {
   name: 'App',
-  components: { CardList, Header, Sidebar, Footer},
+  components: { Header, Footer },
 }
 </script>
 
@@ -49,16 +44,6 @@ export default {
 
 .el-footer {
   margin-top: auto;
-}
-
-.el-aside {
-  background-color: #D3DCE6;
-}
-
-.el-main {
-  background-color: #E9EEF3;
-  color: #333;
-  text-align: center;
 }
 
 </style>

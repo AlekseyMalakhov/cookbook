@@ -1,8 +1,14 @@
 <template>
-    <el-row type="flex"> 
-        <Card />
+    <el-row type="flex">
+            <Card class="card2"/>
+            <Card class="card2"/>
+            <Card class="card2"/>
+            <Card class="card2"/>
+            <Card class="card2"/>
+            <Card class="card2"/>
+            <Card class="card2"/>
+            <Card class="card2"/>
     </el-row>
-
 </template>
 
 <script>
@@ -18,5 +24,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.card2 {
+    margin: 10px;
+}
+
+.card2:hover {
+    transform: rotate(1deg);
+}
 
 </style>

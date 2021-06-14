@@ -31,7 +31,7 @@ export default {
 }
 
 .card2:hover {
-    transform: rotate(1deg);
+    transform: scale(102%, 102%) rotate(1deg);
 }
 
 </style>

@@ -1,3 +1,4 @@
+import img from "./mockImg";
 export const recipes = [
     {
         id: 1,
@@ -14,7 +15,7 @@ export const recipes = [
             Proin libero nunc consequat interdum varius sit amet mattis vulputate. Enim nec dui nunc mattis. Arcu vitae elementum curabitur 
             vitae nunc sed velit dignissim sodales. Hendrerit dolor magna eget est lorem ipsum. Fames ac turpis egestas maecenas pharetra convallis 
             posuere morbi. Blandit turpis cursus in hac habitasse platea dictumst quisque sagittis. Tortor condimentum lacinia quis vel.`,
-        img: `./mockImg.js`,
+        img: img,
     },
     {
         id: 2,
@@ -37,7 +38,7 @@ export const recipes = [
         pellentesque habitant morbi tristique senectus et netus. Egestas egestas fringilla phasellus faucibus scelerisque. Turpis egestas sed tempus urna et pharetra pharetra 
         massa. Ut eu sem integer vitae justo eget magna fermentum iaculis. Diam sit amet nisl suscipit adipiscing bibendum est. Sed viverra tellus in hac habitasse platea dictumst 
         vestibulum.`,
-        img: `./mockImg.js`,
+        img: img,
     },
     {
         id: 3,
@@ -54,6 +55,6 @@ export const recipes = [
          molestie at elementum eu facilisis sed. Arcu non odio euismod lacinia at quis risus sed. Urna duis convallis convallis tellus id. Adipiscing enim eu turpis egestas 
          pretium aenean pharetra. Cursus euismod quis viverra nibh cras. Id donec ultrices tincidunt arcu non sodales neque. Egestas maecenas pharetra convallis posuere morbi 
          leo urna.`,
-        img: `./mockImg.js`,
+        img: img,
     },
 ]

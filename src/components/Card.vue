@@ -1,6 +1,6 @@
 <template>
     <el-card :body-style="{ padding: '0px' }">
-        <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
+        <img :src="recipe.img" class="image">
         <div style="padding: 14px;" class="info">
             <div class="user">{{recipe.user}}</div>
             <span>{{recipe.recipeName}}</span>

@@ -7,7 +7,7 @@
 
     <el-container>
       <el-aside width="200px"><Sidebar /></el-aside>
-      <el-main><Home /></el-main>
+      <el-main><CardList /></el-main>
     </el-container>
 
     <el-footer><Footer /></el-footer>
@@ -16,14 +16,14 @@
 </template>
 
 <script>
-import Home from "./components/Home.vue";
+import CardList from "./components/CardList.vue";
 import Header from "./components/Header.vue";
 import Sidebar from "./components/Sidebar.vue";
 import Footer from "./components/Footer.vue";
 
 export default {
   name: 'App',
-  components: { Home, Header, Sidebar, Footer},
+  components: { CardList, Header, Sidebar, Footer},
 }
 </script>
 

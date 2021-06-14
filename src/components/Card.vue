@@ -2,10 +2,10 @@
     <el-card :body-style="{ padding: '0px' }">
         <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
         <div style="padding: 14px;" class="info">
-            <div class="user">Kevin Crawford</div>
-            <span>Yummy hamburger</span>
+            <div class="user">{{recipe.user}}</div>
+            <span>{{recipe.recipeName}}</span>
             <div class="bottom">
-                <time class="time">{{ "25.02.2021" }}</time>
+                <time class="time">{{ recipe.date}}</time>
                 <el-button type="text" class="button">Recipe</el-button>
             </div>
         </div>
@@ -14,8 +14,14 @@
 
 <script>
 export default {
+    props: {
+        recipe: {
+            type: Object,
+            required: true,
+        }
+    },
     setup() {
-        
+
     },
 }
 </script>

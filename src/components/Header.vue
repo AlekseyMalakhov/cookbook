@@ -1,15 +1,15 @@
 <template>
     <el-row type="flex" justify="space-between" align="middle">
         <el-col :span="12" >
-            <el-row type="flex" align="middle" justify="start" class="title">
-                <router-link to="/">
+            <el-row type="flex" align="middle" justify="start">
+                <router-link to="/" class="title">
                     Cookbook
                 </router-link>
             </el-row>
         </el-col>
         <el-col :span="12">
             <el-row type="flex" align="middle" justify="end">
-                <router-link to="/login">
+                <router-link to="/login" class="avatar">
                     <el-avatar :size="50" :src="state.circleUrl"></el-avatar>
                 </router-link>
             </el-row>
@@ -35,15 +35,16 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-    
+<style lang="scss" scoped>    
     .title {
         color: white;
         font-size: 20px;
+        text-decoration: none;
     }
 
-
-   
+    .avatar {
+        height: 50px;
+    }  
 
 
 </style>

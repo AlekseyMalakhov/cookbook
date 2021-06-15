@@ -9,8 +9,10 @@
         </el-col>
         <el-col :span="12">
             <el-row type="flex" align="middle" justify="end">
-                <router-link to="/login" class="avatar">
-                    <el-avatar :size="50" :src="state.circleUrl"></el-avatar>
+                <router-link to="/login" class="avatarRoute">
+                    <el-avatar :size="50" :src="state.circleUrl" class="avatar"> 
+                        <i class="el-icon-s-custom"/> 
+                    </el-avatar>
                 </router-link>
             </el-row>
         </el-col>
@@ -24,7 +26,7 @@ export default {
     name: "Header",
     setup() {
         const state = reactive({
-            circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
+            
         });
 
         return {
@@ -42,9 +44,17 @@ export default {
         text-decoration: none;
     }
 
-    .avatar {
+    .avatarRoute {
         height: 50px;
-    }  
+    }
+
+    .avatar {
+        font-size: 30px;
+    }
+
+    .avatar:hover {
+        background-color: #aaaeb5;
+    }
 
 
 </style>

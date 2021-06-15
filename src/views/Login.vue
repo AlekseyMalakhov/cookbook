@@ -1,25 +1,35 @@
 <template>
-    Login page
-    <el-form :model="state.login" :rules="state.rules" ref="loginForm" label-width="120px">
-        <el-form-item label="Username" prop="name">
-            <el-input v-model="state.login.name"></el-input>
-        </el-form-item>
-        <el-form-item label="Password" prop="password">
-            <el-input v-model="state.login.password"></el-input>
-        </el-form-item>
+    <el-row type="flex" justify="center" align="middle">
+        <h2>Login page</h2>
+    </el-row>
+    <el-row type="flex" justify="center" align="middle">
+        <el-form :model="state.login" :rules="state.rules" ref="loginForm" label-width="120px" label-position="top">
+            <el-form-item label="Username" prop="name" class="labelLogin1 labelLogin2">
+                <el-input v-model="state.login.name" class="loginInput"></el-input>
+            </el-form-item>
+            <el-form-item label="Password" prop="password" class="labelLogin1 labelLogin2">
+                <el-input v-model="state.login.password" class="loginInput"></el-input>
+            </el-form-item>
 
-        <el-form-item>
-            <el-button type="primary" @click="submitForm()">Create</el-button>
-            <el-button @click="cancel()">Cancel</el-button>
-        </el-form-item>
-    </el-form>
+            <el-row type="flex" justify="space-around" align="middle">
+                <el-button type="primary" @click="submitForm()">Login</el-button>
+                <el-button @click="cancel()">Cancel</el-button>
+            </el-row>
+        </el-form>
+    </el-row>
+    
+    
     
 </template>
 
 <script>
-import { ref, reactive } from '@vue/reactivity'
+import { ref, reactive } from '@vue/reactivity';
+import { useRouter } from 'vue-router';
+
 export default {
     setup() {
+        const router = useRouter();
+
         const state = reactive({
             login: {
                 name: "",
@@ -48,6 +58,7 @@ export default {
         function cancel() {
             this.loginForm.resetFields();
             console.log("cancel");
+            router.push("/");
         }
 
         return {
@@ -60,6 +71,12 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+    .labelLogin1.labelLogin2 label {
+        padding-bottom: 0;
+    }
+    .loginInput {
+        width: 300px;
+    }
 
 </style>

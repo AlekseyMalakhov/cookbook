@@ -47,17 +47,26 @@ export default {
 
         const loginForm = ref(null);
 
+        const send = () => {
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function() {
+                console.log(this.responseText);
+            }
+            xhttp.open("GET", "http://localhost:3000/hi_all", true);
+            xhttp.send();
+        }
+
         function submitForm() {
             this.loginForm.validate(valid => {
                 if (valid) {
                     console.log(this.state.login);
+                    send();
                 }
             });            
         }
 
         function cancel() {
             this.loginForm.resetFields();
-            console.log("cancel");
             router.push("/");
         }
 

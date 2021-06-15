@@ -28,18 +28,18 @@ async function run() {
         await client.connect();
         console.log("Connected correctly to server");
         const collection = client.db("cookbook").collection("users");
-        const user1 = {
-            login: "bigLame",
-            name: "Barny Lewis",
-            password: "123456",
-        }
-        const user2 = {
-            login: "torren",
-            name: "George Tormen",
-            password: "123456",
-        }       
+        // const user1 = {
+        //     login: "bigLame",
+        //     name: "Barny Lewis",
+        //     password: "123456",
+        // }
+        // const user2 = {
+        //     login: "torren",
+        //     name: "George Tormen",
+        //     password: "123456",
+        // }       
         const result = await collection.insertOne(user1);
-        const result2 = await collection.insertOne(user2);     
+        const result2 = await collection.insertOne(user2);
     } catch (err) {
         console.log(err.stack);
     }

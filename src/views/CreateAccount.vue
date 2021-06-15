@@ -1,25 +1,25 @@
 <template>
     <el-row type="flex" justify="center" align="middle">
-        <h2>Login page</h2>
+        <h2>Create account</h2>
     </el-row>
     <el-row type="flex" justify="center" align="middle">
         <el-form :model="state.login" :rules="state.rules" ref="loginForm" label-width="120px" label-position="top">
-            <el-form-item label="Username" prop="name" class="labelLogin1 labelLogin2">
+            <el-form-item label="Create your username" prop="name" class="labelLogin1 labelLogin2">
                 <el-input v-model="state.login.name" class="loginInput"></el-input>
             </el-form-item>
-            <el-form-item label="Password" prop="password" class="labelLogin1 labelLogin2">
-                <el-input v-model="state.login.password" class="loginInput"></el-input>
+            <el-form-item label="Create your password" prop="password1" class="labelLogin1 labelLogin2">
+                <el-input v-model="state.login.password1" class="loginInput"></el-input>
+            </el-form-item>
+            <el-form-item label="Repeat your password" prop="password2" class="labelLogin1 labelLogin2">
+                <el-input v-model="state.login.password2" class="loginInput"></el-input>
             </el-form-item>
 
             <el-row type="flex" justify="space-around" align="middle">
-                <el-button type="primary" @click="submitForm()">Login</el-button>
+                <el-button type="primary" @click="submitForm()">Create</el-button>
                 <el-button @click="cancel()">Cancel</el-button>
             </el-row>
         </el-form>
     </el-row>
-    <el-row type="flex" justify="center" align="middle" class="signUp">
-        Don't have an account? &nbsp; <router-link to="/sign_up">Create one.</router-link>
-    </el-row>  
     
     
 </template>
@@ -35,13 +35,17 @@ export default {
         const state = reactive({
             login: {
                 name: "",
-                password: "",
+                password1: "",
+                password2: "",
             },
             rules: {
                 name: [
                     {required: true, message: "Please, enter username", trigger: "change"},
                 ],
-                password: [
+                password1: [
+                    {required: true, message: "Please, enter password", trigger: "change"},
+                ],
+                password2: [
                     {required: true, message: "Please, enter password", trigger: "change"},
                 ],
             },
@@ -80,14 +84,5 @@ export default {
 </script>
 
 <style lang="scss">
-    .labelLogin1.labelLogin2 label {
-        padding-bottom: 0;
-    }
-    .loginInput {
-        width: 300px;
-    }
-    .signUp {
-        margin-top: 25px;
-    }
-
+    //classes look at the Login component
 </style>

@@ -18,7 +18,7 @@
         </el-form>
     </el-row>
     <el-row type="flex" justify="center" align="middle" class="signUp">
-        Don't have an account? &nbsp; <router-link to="/sign_up">Create one.</router-link>
+        Don't have an account? &nbsp; <router-link to="/create_account">Create one.</router-link>
     </el-row>  
     
     

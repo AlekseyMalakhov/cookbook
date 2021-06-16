@@ -53,8 +53,14 @@ export default {
 
         const loginForm = ref(null);
 
-        const send = () => {
-            fetch("http://localhost:3000/hi_all")
+        const send = (account) => {
+            fetch("http://localhost:3000/create_account", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(account),
+            })
             .then(response => response.text())
             .then(data => console.log(data));
         }
@@ -62,8 +68,14 @@ export default {
         function submitForm() {
             this.loginForm.validate(valid => {
                 if (valid) {
-                    console.log(this.state.login);
-                    send();
+                    if (this.state.login.password1 === this.state.login.password2) {
+                        const account = {...this.state.login};
+                        account.password = account.password1;
+                        delete account.password1;
+                        delete account.password2;
+                        send(account);
+                        console.log(account);
+                    }
                 }
             });            
         }

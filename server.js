@@ -2,20 +2,12 @@ const express = require('express')
 const app = express()
 const port = 3000
 const cors = require("cors");
-
 app.use(cors());
+app.use(express.json());
 
-app.get('/hi_all', (req, res) => {
-  res.send('Hello World!')
-})
-
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
-})
-
-//megauser
-//123456789qqq
-
+//DB account info
+//login - megauser
+//pass - 123456789qqq
 const { MongoClient } = require("mongodb");
 const uri = "mongodb+srv://megauser:123456789qqq@cluster0.hsrcs.mongodb.net/cookbook?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { 
@@ -23,29 +15,40 @@ const client = new MongoClient(uri, {
     useUnifiedTopology: true 
 });
 
+//connect to DB
+let collection;
 async function run() {
     try {
         await client.connect();
         console.log("Connected correctly to server");
-        const collection = client.db("cookbook").collection("users");
-        // const user1 = {
-        //     login: "bigLame",
-        //     name: "Barny Lewis",
-        //     password: "123456",
-        // }
-        // const user2 = {
-        //     login: "torren",
-        //     name: "George Tormen",
-        //     password: "123456",
-        // }       
-        const result = await collection.insertOne(user1);
-        const result2 = await collection.insertOne(user2);
+        collection = client.db("cookbook").collection("users");
     } catch (err) {
         console.log(err.stack);
-    }
-    
-    finally {
-        await client.close();
+    } finally {
+        //await client.close();
     }
 }
 run().catch(console.dir);
+
+
+//create account
+app.post('/create_account', (req, res) => {
+    const newAccount = req.body;
+    async function createAccount() {
+        const result = await collection.insertOne(newAccount);
+        res.send(result);    
+    }
+    createAccount();
+})
+
+
+
+
+
+
+
+//start the server
+app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`)
+})
+

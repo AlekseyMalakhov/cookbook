@@ -41,6 +41,28 @@ app.post('/create_account', (req, res) => {
     createAccount();
 })
 
+//login
+app.post('/login', (req, res) => {
+    const user = req.body;
+    async function getUser() {
+        const query = {
+            name: user.name,
+        }
+        const result = await collection.findOne(query);
+        console.log(result);
+        if (!result) {
+            res.sendStatus(404);
+            return;
+        }
+        if (result && result.password === user.password) {
+            res.send(result); 
+        } else {
+            res.sendStatus(403);
+        }
+    }
+    getUser();
+})
+
 
 
 

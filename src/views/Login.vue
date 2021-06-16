@@ -49,17 +49,26 @@ export default {
 
         const loginForm = ref(null);
 
-        const send = () => {
-            fetch("http://localhost:3000/hi_all")
-            .then(response => response.text())
-            .then(data => console.log(data));
+        const send = (credentials) => {
+            fetch("http://localhost:3000/login", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(credentials),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.name) {
+                    localStorage.setItem("user", JSON.stringify(data));
+                }
+            });
         }
 
         function submitForm() {
             this.loginForm.validate(valid => {
                 if (valid) {
-                    console.log(this.state.login);
-                    send();
+                    send(this.state.login);
                 }
             });            
         }

@@ -27,10 +27,12 @@
 <script>
 import { ref, reactive } from '@vue/reactivity';
 import { useRouter } from 'vue-router';
+import { useStore } from 'vuex'
 
 export default {
     setup() {
         const router = useRouter();
+        const store = useStore();
 
         const state = reactive({
             login: {
@@ -61,6 +63,9 @@ export default {
             .then(data => {
                 if (data.name) {
                     localStorage.setItem("user", JSON.stringify(data));
+                    console.log(store);
+                    store.dispatch("User/setUser", data);
+                    router.push("/");
                 }
             });
         }

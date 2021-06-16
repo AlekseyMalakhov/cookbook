@@ -15,8 +15,30 @@
                         <i class="el-icon-s-custom"/> 
                     </el-avatar>
                 </router-link>
+
+                <el-dropdown trigger="click">
+                    <span class="el-dropdown-link">
+                        Dropdown List<i class="el-icon-arrow-down el-icon--right"></i>
+                    </span>
+                    <template #dropdown>
+                        <el-dropdown-menu>
+                            <el-dropdown-item>Action 1</el-dropdown-item>
+                            <el-dropdown-item>Action 2</el-dropdown-item>
+
+                        </el-dropdown-menu>
+                    </template>
+                </el-dropdown>
+
+
+
             </el-row>
-        </el-col>
+        </el-col>           
+
+
+        
+
+
+
     </el-row>
 </template>
 
@@ -31,7 +53,7 @@ export default {
             circleUrl: "",
         });
         const store = useStore();
-        const user = computed(() => store.state.User.user);       
+        const user = computed(() => store.state.User.user);
 
         return {
             state,
@@ -65,6 +87,17 @@ export default {
 
     .avatar:hover {
         background-color: #aaaeb5;
+    }
+
+
+
+
+    .el-dropdown-link {
+        cursor: pointer;
+        color: #040b13;
+    }
+    .el-icon-arrow-down {
+        font-size: 12px;
     }
 
 

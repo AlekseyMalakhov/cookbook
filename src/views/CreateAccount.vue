@@ -5,13 +5,13 @@
     <el-row type="flex" justify="center" align="middle">
         <el-form :model="state.login" :rules="state.rules" ref="loginForm" label-width="120px" label-position="top">
             <el-form-item label="Create your username" prop="name" class="labelLogin1 labelLogin2">
-                <el-input v-model="state.login.name" class="loginInput"></el-input>
+                <el-input v-model="state.login.name" class="loginInput" @keyup.enter="() => submitForm()"></el-input>
             </el-form-item>
             <el-form-item label="Create your password" prop="password1" class="labelLogin1 labelLogin2">
-                <el-input v-model="state.login.password1" class="loginInput"></el-input>
+                <el-input v-model="state.login.password1" class="loginInput" @keyup.enter="() => submitForm()"></el-input>
             </el-form-item>
             <el-form-item label="Repeat your password" prop="password2" class="labelLogin1 labelLogin2">
-                <el-input v-model="state.login.password2" class="loginInput"></el-input>
+                <el-input v-model="state.login.password2" class="loginInput" @keyup.enter="() => submitForm()"></el-input>
             </el-form-item>
 
             <el-row type="flex" justify="space-around" align="middle">
@@ -27,6 +27,7 @@
 <script>
 import { ref, reactive } from '@vue/reactivity';
 import { useRouter } from 'vue-router';
+import { ElNotification } from 'element-plus';
 
 export default {
     setup() {
@@ -61,8 +62,19 @@ export default {
                 },
                 body: JSON.stringify(account),
             })
-            .then(response => response.text())
-            .then(data => console.log(data));
+            .then(response => {
+                if (response.status === 200) {
+                    showSuccess("Account successfully created.");
+                    return response.json();                    
+                } else {
+                    showError(`Login ${account.name} already exists. Please, try another one.` );
+                }  
+            })
+            .then(data => console.log(data))
+            .catch((error) => {
+                console.error('Error:', error);
+                showError("Something went wrong :( Please contact administrator");
+            });
         }
 
         function submitForm() {
@@ -83,6 +95,20 @@ export default {
         function cancel() {
             this.loginForm.resetFields();
             router.push("/");
+        }
+
+        function showError(text) {
+            ElNotification.error({
+                title: 'Error',
+                message: text,
+            });
+        }
+
+        function showSuccess(text) {
+            ElNotification.success({
+                title: 'Success',
+                message: text,
+            });
         }
 
         return {

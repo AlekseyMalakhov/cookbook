@@ -5,10 +5,10 @@
     <el-row type="flex" justify="center" align="middle">
         <el-form :model="state.login" :rules="state.rules" ref="loginForm" label-width="120px" label-position="top">
             <el-form-item label="Username" prop="name" class="labelLogin1 labelLogin2">
-                <el-input v-model="state.login.name" class="loginInput"></el-input>
+                <el-input v-model="state.login.name" class="loginInput" @keyup.enter="() => submitForm()"></el-input>
             </el-form-item>
             <el-form-item label="Password" prop="password" class="labelLogin1 labelLogin2">
-                <el-input v-model="state.login.password" class="loginInput"></el-input>
+                <el-input v-model="state.login.password" class="loginInput" @keyup.enter="() => submitForm()"></el-input>
             </el-form-item>
 
             <el-row type="flex" justify="space-around" align="middle">
@@ -19,8 +19,7 @@
     </el-row>
     <el-row type="flex" justify="center" align="middle" class="signUp">
         Don't have an account? &nbsp; <router-link to="/create_account">Create one.</router-link>
-    </el-row>  
-    
+    </el-row>   
     
 </template>
 
@@ -28,6 +27,7 @@
 import { ref, reactive } from '@vue/reactivity';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex'
+import { ElNotification } from 'element-plus';
 
 export default {
     setup() {
@@ -59,13 +59,20 @@ export default {
                 },
                 body: JSON.stringify(credentials),
             })
-            .then(response => response.json())
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json();                    
+                } else {
+                    showError("Login or password is incorrect");
+                }               
+            })
             .then(data => {
                 if (data.name) {
                     localStorage.setItem("user", JSON.stringify(data));
-                    console.log(store);
                     store.dispatch("User/setUser", data);
                     router.push("/");
+                } else {
+                    showError("Something went wrong :( Please contact administrator");
                 }
             });
         }
@@ -81,6 +88,13 @@ export default {
         function cancel() {
             this.loginForm.resetFields();
             router.push("/");
+        }
+
+        function showError(text) {
+            ElNotification.error({
+                title: 'Error',
+                message: text,
+            });
         }
 
         return {

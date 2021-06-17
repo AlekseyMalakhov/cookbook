@@ -9,42 +9,29 @@
         </el-col>
         <el-col :span="12">
             <el-row type="flex" align="middle" justify="end">
-                <span v-if="user" class="username">{{ user.name }}</span>
-                <router-link to="/login" class="avatarRoute">
-                    <el-avatar :size="50" :src="state.circleUrl" class="avatar"> 
-                        <i class="el-icon-s-custom"/> 
-                    </el-avatar>
-                </router-link>
-
-                <el-dropdown trigger="click">
-                    <span class="el-dropdown-link">
-                        Dropdown List<i class="el-icon-arrow-down el-icon--right"></i>
-                    </span>
+                <el-dropdown trigger="click" v-if="user">
+                    <span class="el-dropdown-link username">{{ user.name }}</span>
                     <template #dropdown>
                         <el-dropdown-menu>
-                            <el-dropdown-item>Action 1</el-dropdown-item>
-                            <el-dropdown-item>Action 2</el-dropdown-item>
-
+                            <el-dropdown-item @click="logout">Logout</el-dropdown-item>
                         </el-dropdown-menu>
                     </template>
                 </el-dropdown>
 
-
-
+                <router-link to="/login" class="avatarRoute">
+                    <el-avatar :size="50" :src="state.circleUrl" class="avatar"> 
+                        <i class="el-icon-s-custom"/> 
+                    </el-avatar>
+                </router-link>          
             </el-row>
-        </el-col>           
-
-
-        
-
-
-
+        </el-col>        
     </el-row>
 </template>
 
 <script>
 import { reactive, computed } from "vue";
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router';
 
 export default {
     name: "Header",
@@ -52,12 +39,20 @@ export default {
         const state = reactive({
             circleUrl: "",
         });
+        const router = useRouter();
         const store = useStore();
         const user = computed(() => store.state.User.user);
+
+        const logout = () => {
+            localStorage.removeItem("user");
+            store.dispatch("User/setUser", null);
+            router.push("/");
+        }
 
         return {
             state,
             user,
+            logout,
         };
     },
 
@@ -89,16 +84,8 @@ export default {
         background-color: #aaaeb5;
     }
 
-
-
-
     .el-dropdown-link {
         cursor: pointer;
-        color: #040b13;
     }
-    .el-icon-arrow-down {
-        font-size: 12px;
-    }
-
 
 </style>

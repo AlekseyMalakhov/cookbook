@@ -34,11 +34,27 @@ run().catch(console.dir);
 //create account
 app.post('/create_account', (req, res) => {
     const newAccount = req.body;
+
+    //check if username is free
+    async function checkForExisting() {
+        const query = {
+            name: newAccount.name,
+        }
+        const result = await collection.findOne(query);
+        return result;
+    }
+    checkForExisting().then((result) => {
+        if (!result) {
+            createAccount();
+        } else {
+            res.sendStatus(404);
+        }
+    });    
+
     async function createAccount() {
         const result = await collection.insertOne(newAccount);
         res.send(result);    
     }
-    createAccount();
 })
 
 //login

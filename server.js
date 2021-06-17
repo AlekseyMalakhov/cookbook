@@ -47,7 +47,7 @@ app.post('/create_account', (req, res) => {
         if (!result) {
             createAccount();
         } else {
-            res.sendStatus(404);
+            res.sendStatus(409);
         }
     });    
 
@@ -79,7 +79,20 @@ app.post('/login', (req, res) => {
     getUser();
 })
 
-
+//get all users
+app.get("/users", (req, res) => {
+    async function getAllUsers() {
+        const cursor = await collection.find();
+        const result = await cursor.toArray();
+        if (!result) {
+            res.sendStatus(403);
+            return;
+        } else {
+            res.send(result);
+        }
+    }
+    getAllUsers();
+});
 
 
 

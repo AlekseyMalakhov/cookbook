@@ -19,6 +19,18 @@ import Footer from "./components/Footer.vue";
 export default {
   name: 'App',
   components: { Header, Footer },
+  setup() {
+    const getAllUsers = () => {
+      fetch("http://localhost:3000/users")
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+      });
+    }
+    getAllUsers();
+  }
 }
 </script>
 

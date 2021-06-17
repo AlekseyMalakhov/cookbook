@@ -74,6 +74,10 @@ export default {
                 } else {
                     showError("Something went wrong :( Please contact administrator");
                 }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                showError("Something went wrong :( Please contact administrator");
             });
         }
 

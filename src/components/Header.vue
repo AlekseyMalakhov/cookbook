@@ -18,7 +18,7 @@
                     </template>
                 </el-dropdown>
 
-                <router-link to="/login" class="avatarRoute">
+                <router-link :to="link" class="avatarRoute">
                     <el-avatar :size="50" :src="state.circleUrl" class="avatar"> 
                         <i class="el-icon-s-custom"/> 
                     </el-avatar>
@@ -42,6 +42,13 @@ export default {
         const router = useRouter();
         const store = useStore();
         const user = computed(() => store.state.User.user);
+        const link = computed(() => {
+            if (user.value) {
+                return "";
+            } else {
+                return "/login";
+            }
+        });
 
         const logout = () => {
             localStorage.removeItem("user");
@@ -53,6 +60,7 @@ export default {
             state,
             user,
             logout,
+            link,
         };
     },
 

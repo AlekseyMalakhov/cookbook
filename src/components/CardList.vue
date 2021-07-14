@@ -1,13 +1,13 @@
 <template>
     <el-row type="flex">
-        <Card class="card2" v-for="recipe in state.recipes" :key="recipe.id" :recipe="recipe" />
+        <Card class="card2" v-for="recipe in recipes" :key="recipe.id" :recipe="recipe" />
     </el-row>
 </template>
 
 <script>
 import Card from "./Card.vue";
-import { recipes } from "../mock_data/mock_db";
-import { reactive } from "vue";
+import { recipesList } from "../mock_data/mock_db";
+import { computed } from "vue";
 
 export default {
     name: "CardList",
@@ -17,13 +17,21 @@ export default {
             required: false,
         },
     },
-    setup() {
-        const state = reactive({
-            recipes: recipes,
+    setup(props) {
+        const recipes = computed(() => {
+            if (!props.userID) {
+                console.log("here");
+                return recipesList;
+            } else {
+                const rs = recipesList.filter(res => res.userID === Number.parseInt(props.userID));
+                console.log(rs);
+                return rs;
+            }
         });
 
         return {
-            state,
+            //state,
+            recipes,
         };
     },
     components: { Card },

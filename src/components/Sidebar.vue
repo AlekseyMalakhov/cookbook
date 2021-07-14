@@ -13,12 +13,12 @@
 </template>
 
 <script>
-import { recipes } from "../mock_data/mock_db";
+import { recipesList } from "../mock_data/mock_db";
 import { reactive } from "vue";
 export default {
     setup() {
         const state = reactive({
-            recipes: recipes,
+            recipes: recipesList,
         });
 
         return {

@@ -1,5 +1,5 @@
 import img from "./mockImg";
-export const recipes = [
+export const recipesList = [
     {
         id: 1,
         user: "Kevin Crawford",

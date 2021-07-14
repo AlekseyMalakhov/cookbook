@@ -3,14 +3,10 @@ export const recipes = [
     {
         id: 1,
         user: "Kevin Crawford",
+        userID: 25,
         date: "28.07.2021",
         recipeName: "Yummy hamburger",
-        recipeIngredients: [
-            {Vestibulum: "20 gr"},
-            {Lorem: "200 gr"},
-            {Libero: "1 table spoon"},
-            {Interdum: "2 tea spoons"},
-        ],
+        recipeIngredients: [{ Vestibulum: "20 gr" }, { Lorem: "200 gr" }, { Libero: "1 table spoon" }, { Interdum: "2 tea spoons" }],
         recipeText: `Suspendisse sed nisi lacus sed viverra tellus. Vestibulum lorem sed risus ultricies tristique. 
             Proin libero nunc consequat interdum varius sit amet mattis vulputate. Enim nec dui nunc mattis. Arcu vitae elementum curabitur 
             vitae nunc sed velit dignissim sodales. Hendrerit dolor magna eget est lorem ipsum. Fames ac turpis egestas maecenas pharetra convallis 
@@ -20,16 +16,10 @@ export const recipes = [
     {
         id: 2,
         user: "Lark Woodward",
+        userID: 77,
         date: "30.07.2021",
         recipeName: "Giada's Chicken Saltimbocca",
-        recipeIngredients: [
-            {Purus: "30 gr"},
-            {Pellentesque: "500 gr"},
-            {Quam: "1 table spoon"},
-            {Viverra: "2 tea spoons"},
-            {Lorem: "100 gr"},
-            {Turpis: "300 gr"},
-        ],
+        recipeIngredients: [{ Purus: "30 gr" }, { Pellentesque: "500 gr" }, { Quam: "1 table spoon" }, { Viverra: "2 tea spoons" }, { Lorem: "100 gr" }, { Turpis: "300 gr" }],
         recipeText: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Egestas tellus rutrum 
         tellus pellentesque eu tincidunt tortor. In nulla posuere sollicitudin aliquam ultrices sagittis orci a. Pharetra diam sit amet nisl suscipit adipiscing. Lectus quam 
         id leo in vitae turpis massa sed. Feugiat scelerisque varius morbi enim nunc faucibus a pellentesque sit. Magna fringilla urna porttitor rhoncus dolor purus. Integer 
@@ -43,13 +33,10 @@ export const recipes = [
     {
         id: 3,
         user: "Harley Tillery",
+        userID: 33,
         date: "16.07.2021",
         recipeName: "Healthified Broccoli Cheddar Soup",
-        recipeIngredients: [
-            {Risus: "70 gr"},
-            {Convallis: "600 gr"},
-            {Adipiscing: "5 table spoon"},
-        ],
+        recipeIngredients: [{ Risus: "70 gr" }, { Convallis: "600 gr" }, { Adipiscing: "5 table spoon" }],
         recipeText: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Id diam vel quam elementum.
          Donec et odio pellentesque diam volutpat. Orci nulla pellentesque dignissim enim sit amet venenatis urna cursus. Interdum consectetur libero id faucibus. Morbi leo urna 
          molestie at elementum eu facilisis sed. Arcu non odio euismod lacinia at quis risus sed. Urna duis convallis convallis tellus id. Adipiscing enim eu turpis egestas 
@@ -57,4 +44,4 @@ export const recipes = [
          leo urna.`,
         img: img,
     },
-]
+];

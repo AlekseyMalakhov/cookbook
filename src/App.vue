@@ -1,15 +1,13 @@
-<template> 
-  <el-container id="main_container">
-    <el-header>
-      <Header />
-    </el-header>
+<template>
+    <el-container id="main_container">
+        <el-header>
+            <Header />
+        </el-header>
 
-    <router-view />
-    
+        <router-view />
 
-    <el-footer><Footer /></el-footer>
-  </el-container>
-  
+        <el-footer><Footer /></el-footer>
+    </el-container>
 </template>
 
 <script>
@@ -17,43 +15,43 @@ import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 
 export default {
-  name: 'App',
-  components: { Header, Footer },
-  setup() {
-    const getAllUsers = () => {
-      fetch("http://localhost:3000/users")
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-      });
-    }
-    getAllUsers();
-  }
-}
+    name: "App",
+    components: { Header, Footer },
+    setup() {
+        const getAllUsers = () => {
+            fetch("http://localhost:3000/users")
+                .then(response => {
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+                });
+        };
+        getAllUsers();
+    },
+};
 </script>
 
 <style lang="scss">
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 #main_container {
-  min-height: 100vh;
+    min-height: 100vh;
 }
 
-.el-header, .el-footer {
-  background-color: #409EFF;
-  color: #333;
-  text-align: center;
-  line-height: 60px;
+.el-header,
+.el-footer {
+    background-color: #409eff;
+    color: #333;
+    text-align: center;
+    line-height: 60px;
 }
 
 .el-footer {
-  margin-top: auto;
+    margin-top: auto;
 }
-
 </style>

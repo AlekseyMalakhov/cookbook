@@ -1,7 +1,12 @@
 <template>
     <el-container>
         <el-aside width="200px"><Sidebar /></el-aside>
-        <el-main><CardList :userID="$route.params.id"/></el-main>
+        <el-main>
+            <CardList :userID="$route.params.id" />
+            <el-tooltip effect="light" content="Add recipe" placement="top" v-if="user">
+                <el-button type="primary" icon="el-icon-plus" circle class="addRecipe"></el-button>
+            </el-tooltip>
+        </el-main>
     </el-container>
 </template>
 
@@ -9,21 +14,25 @@
 import CardList from "../components/CardList.vue";
 import Sidebar from "../components/Sidebar.vue";
 import { useRoute } from "vue-router";
-import { watch } from "vue";
+import { useStore } from "vuex";
+import { watch, computed } from "vue";
 
 export default {
     name: "Home",
     components: { CardList, Sidebar },
     setup() {
         const route = useRoute();
-
-        // fetch the user information when params change
+        const store = useStore();
+        const user = computed(() => store.state.User.user);
         watch(
             () => route.params.id,
             () => {
                 console.log(route.params.id);
             }
         );
+        return {
+            user,
+        };
     },
 };
 </script>
@@ -37,5 +46,12 @@ export default {
     background-color: #e9eef3;
     color: #333;
     text-align: center;
+}
+
+.addRecipe {
+    position: fixed;
+    bottom: 100px;
+    right: 50px;
+    font-size: 25px;
 }
 </style>

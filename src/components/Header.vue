@@ -1,6 +1,6 @@
 <template>
     <el-row type="flex" justify="space-between" align="middle">
-        <el-col :span="12" >
+        <el-col :span="12">
             <el-row type="flex" align="middle" justify="start">
                 <router-link to="/" class="title">
                     Cookbook
@@ -13,25 +13,30 @@
                     <span class="el-dropdown-link username">{{ user.name }}</span>
                     <template #dropdown>
                         <el-dropdown-menu>
+                            <el-dropdown-item>
+                                <router-link :to="`/${user._id}`" class="chefLink">
+                                    My recepies
+                                </router-link>
+                            </el-dropdown-item>
                             <el-dropdown-item @click="logout">Logout</el-dropdown-item>
                         </el-dropdown-menu>
                     </template>
                 </el-dropdown>
 
                 <router-link :to="link" class="avatarRoute">
-                    <el-avatar :size="50" :src="state.circleUrl" class="avatar"> 
-                        <i class="el-icon-s-custom"/> 
+                    <el-avatar :size="50" :src="state.circleUrl" class="avatar">
+                        <i class="el-icon-s-custom" />
                     </el-avatar>
-                </router-link>          
+                </router-link>
             </el-row>
-        </el-col>        
+        </el-col>
     </el-row>
 </template>
 
 <script>
 import { reactive, computed } from "vue";
-import { useStore } from 'vuex'
-import { useRouter } from 'vue-router';
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 export default {
     name: "Header",
@@ -54,7 +59,7 @@ export default {
             localStorage.removeItem("user");
             store.dispatch("User/setUser", null);
             router.push("/");
-        }
+        };
 
         return {
             state,
@@ -63,37 +68,40 @@ export default {
             link,
         };
     },
-
-}
+};
 </script>
 
-<style lang="scss" scoped>    
-    .title {
-        color: white;
-        font-size: 20px;
-        text-decoration: none;
-    }
+<style lang="scss" scoped>
+.title {
+    color: white;
+    font-size: 20px;
+    text-decoration: none;
+}
 
-    .username {
-        color: white;
-        font-size: 20px;
-        margin-right: 20px;
-    }
+.username {
+    color: white;
+    font-size: 20px;
+    margin-right: 20px;
+}
 
-    .avatarRoute {
-        height: 50px;
-    }
+.avatarRoute {
+    height: 50px;
+}
 
-    .avatar {
-        font-size: 30px;
-    }
+.avatar {
+    font-size: 30px;
+}
 
-    .avatar:hover {
-        background-color: #aaaeb5;
-    }
+.avatar:hover {
+    background-color: #aaaeb5;
+}
 
-    .el-dropdown-link {
-        cursor: pointer;
-    }
+.el-dropdown-link {
+    cursor: pointer;
+}
 
+.chefLink {
+    text-decoration: none;
+    color: #606266;
+}
 </style>

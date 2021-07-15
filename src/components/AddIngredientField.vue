@@ -5,7 +5,14 @@
         <el-select v-model="state.unit" @change="sendData($event)" placeholder="Unit" class="unit">
             <el-option v-for="unit in props.units" :key="unit" :label="unit" :value="unit"></el-option>
         </el-select>
-        <el-button type="danger" icon="el-icon-delete" circle style="margin-left: 20px" :class="label ? 'invisible' : ''"></el-button>
+        <el-button
+            type="danger"
+            icon="el-icon-delete"
+            circle
+            style="margin-left: 20px"
+            @click="deleteIng()"
+            :class="label ? 'invisible' : ''"
+        ></el-button>
     </el-form-item>
 </template>
 
@@ -52,11 +59,16 @@ export default {
             ctx.emit("change-ingredient", state);
         };
 
+        const deleteIng = () => {
+            ctx.emit("delete-ingredient", props.id);
+        };
+
         return {
             props,
             sendData,
             state,
             label,
+            deleteIng,
         };
     },
 };

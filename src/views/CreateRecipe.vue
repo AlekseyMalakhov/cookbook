@@ -13,7 +13,8 @@
                 :key="ing.id"
                 :id="ing.id"
                 :units="units"
-                @change-ingredient="changeIngredient"
+                @change-ingredient="changeIng"
+                @delete-ingredient="deleteIng"
             />
 
             <el-row type="flex" justify="center" align="middle">
@@ -95,7 +96,7 @@ export default {
                 });
         };
 
-        const changeIngredient = (ingredient) => {
+        const changeIng = (ingredient) => {
             console.log(ingredient);
         };
 
@@ -108,6 +109,12 @@ export default {
             };
             state.recipe.recipeIngredients.push(ing);
             ingID++;
+        };
+
+        const deleteIng = (id) => {
+            console.log(id);
+            const arr = state.recipe.recipeIngredients.filter((el) => el.id !== id);
+            state.recipe.recipeIngredients = arr;
         };
 
         function submitForm() {
@@ -136,8 +143,9 @@ export default {
             submitForm,
             recipeForm,
             cancel,
-            changeIngredient,
+            changeIng,
             addIng,
+            deleteIng,
         };
     },
 };

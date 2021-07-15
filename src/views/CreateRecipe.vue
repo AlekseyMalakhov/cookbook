@@ -23,7 +23,34 @@
                 </el-tooltip>
             </el-row>
 
-            <el-row type="flex" justify="space-around" align="middle">
+            <el-form-item label="Text:">
+                <el-input type="textarea" :autosize="{ minRows: 4 }" placeholder="Please input" v-model="state.recipe.recipeText"> </el-input>
+            </el-form-item>
+
+            <el-row type="flex" justify="center" align="middle" style="margin-bottom: 20px">
+                <div class="imageLable">Image:</div>
+                <el-form-item>
+                    <el-upload
+                        class="imgUpload1 imgUpload2"
+                        drag
+                        action="https://jsonplaceholder.typicode.com/posts/"
+                        :on-preview="handlePreview"
+                        :on-remove="handleRemove"
+                        :file-list="fileList"
+                        multiple
+                    >
+                        <i class="el-icon-upload"></i>
+                        <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
+                        <template #tip>
+                            <div class="el-upload__tip">
+                                jpg/png files with a size less than 500kb
+                            </div>
+                        </template>
+                    </el-upload>
+                </el-form-item>
+            </el-row>
+
+            <el-row type="flex" justify="space-around" align="middle" style="margin-bottom: 50px">
                 <el-button type="primary" @click="submitForm()">Create</el-button>
                 <el-button @click="cancel()">Cancel</el-button>
             </el-row>
@@ -178,5 +205,17 @@ export default {
 
 .signUp {
     margin-top: 25px;
+}
+
+.imageLable {
+    font-size: 14px;
+    color: #606266;
+    margin-right: 20px;
+    margin-bottom: 40px;
+}
+
+.imgUpload1.imgUpload2 .el-upload__tip {
+    line-height: 10px;
+    margin-top: 0;
 }
 </style>

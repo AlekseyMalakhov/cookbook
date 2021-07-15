@@ -8,33 +8,7 @@
                 <el-input v-model="state.recipe.recipeName" class="recipeInput" @keyup.enter="() => submitForm()"></el-input>
             </el-form-item>
 
-            <el-form-item label="Ingredients" prop="recipeForm" class="labelRecipe1 labelRecipe2">
-                <el-input v-model="state.recipe.recipeIngredients[0].name" class="recipeInput" placeholder="Ingredient"></el-input>
-                <el-input
-                    v-model="state.recipe.recipeIngredients[0].amount"
-                    @input="checkName($event)"
-                    class="amount"
-                    inputMode="numeric"
-                    placeholder="Amount"
-                ></el-input>
-                <el-select v-model="state.recipe.recipeIngredients[0].unit" placeholder="Unit" class="unit">
-                    <el-option v-for="unit in units" :key="unit" :label="unit" :value="unit"></el-option>
-                </el-select>
-            </el-form-item>
-
-            <el-form-item prop="recipeForm" class="labelRecipe1 labelRecipe2">
-                <el-input v-model="state.recipe.recipeIngredients[0].name" class="recipeInput" placeholder="Ingredient"></el-input>
-                <el-input
-                    v-model="state.recipe.recipeIngredients[0].amount"
-                    @input="checkName($event)"
-                    class="amount"
-                    inputMode="numeric"
-                    placeholder="Amount"
-                ></el-input>
-                <el-select v-model="state.recipe.recipeIngredients[0].unit" placeholder="Unit" class="unit">
-                    <el-option v-for="unit in units" :key="unit" :label="unit" :value="unit"></el-option>
-                </el-select>
-            </el-form-item>
+            <AddIngredientField :recipe="state.recipe" :units="units" @change-ingredient="changeIngredient" />
 
             <el-row type="flex" justify="space-around" align="middle">
                 <el-button type="primary" @click="submitForm()">Create</el-button>
@@ -49,16 +23,10 @@ import { ref, reactive } from "@vue/reactivity";
 import { useRouter } from "vue-router";
 //import { useStore } from "vuex";
 import { ElNotification } from "element-plus";
-//import AddIngredientField from "../components/AddIngredientField.vue";
-
-const allowOnlyNumbers = text => {
-    const regex1 = /[^\d]/g;
-    const onlyNumbers = text.replace(regex1, "");
-    return onlyNumbers;
-};
+import AddIngredientField from "../components/AddIngredientField.vue";
 
 export default {
-    //components: { AddIngredientField },
+    components: { AddIngredientField },
     setup() {
         const router = useRouter();
         const units = ["none", "g", "kg", "L", "ml", "tea sp.", "table sp."];
@@ -105,6 +73,10 @@ export default {
                 });
         };
 
+        const changeIngredient = () => {
+            console.log("changed");
+        };
+
         function submitForm() {
             this.recipeForm.validate(valid => {
                 if (valid) {
@@ -125,18 +97,13 @@ export default {
             });
         }
 
-        const checkName = text => {
-            const onlyNumbers = allowOnlyNumbers(text);
-            state.recipe.recipeIngredients[0].amount = onlyNumbers;
-        };
-
         return {
             state,
             units,
             submitForm,
             recipeForm,
             cancel,
-            checkName,
+            changeIngredient,
         };
     },
 };

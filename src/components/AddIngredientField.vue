@@ -1,22 +1,52 @@
 <template>
     <el-form-item label="Ingredients" prop="recipeForm" class="labelRecipe1 labelRecipe2">
-        <el-input v-model="state.recipe.recipeIngredients[0].name" class="recipeInput" placeholder="Ingredient"></el-input>
-        <el-input
-            v-model="state.recipe.recipeIngredients[0].amount"
-            @input="checkName($event)"
-            class="amount"
-            inputMode="numeric"
-            placeholder="Amount"
-        ></el-input>
-        <el-select v-model="state.recipe.recipeIngredients[0].unit" placeholder="Unit" class="unit">
-            <el-option v-for="unit in units" :key="unit" :label="unit" :value="unit"></el-option>
+        <el-input v-model="state.name" class="recipeInput" placeholder="Ingredient"></el-input>
+        <el-input v-model="state.amount" @input="checkName($event)" class="amount" inputMode="numeric" placeholder="Amount"></el-input>
+        <el-select v-model="state.unit" placeholder="Unit" class="unit">
+            <el-option v-for="unit in props.units" :key="unit" :label="unit" :value="unit"></el-option>
         </el-select>
     </el-form-item>
 </template>
 
 <script>
+import { reactive } from "@vue/reactivity";
+const allowOnlyNumbers = text => {
+    const regex1 = /[^\d]/g;
+    const onlyNumbers = text.replace(regex1, "");
+    return onlyNumbers;
+};
+
 export default {
     name: "AddIngredientField",
+    props: {
+        recipe: {
+            type: Object,
+            required: false,
+        },
+        units: {
+            type: Array,
+            required: true,
+        },
+    },
+    setup(props) {
+        const state = reactive({
+            name: "",
+            amount: "",
+            unit: "",
+        });
+
+        const checkName = text => {
+            const onlyNumbers = allowOnlyNumbers(text);
+            console.log(onlyNumbers);
+            state.amount = onlyNumbers;
+        };
+
+        return {
+            props,
+            checkName,
+            state,
+        };
+    },
 };
 </script>
 

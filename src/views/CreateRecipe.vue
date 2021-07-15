@@ -96,8 +96,10 @@ export default {
                 });
         };
 
-        const changeIng = (ingredient) => {
-            console.log(ingredient);
+        const changeIng = (ingr) => {
+            const index = state.recipe.recipeIngredients.findIndex((el) => el.id === ingr.id);
+            console.log(index);
+            state.recipe.recipeIngredients[index] = ingr;
         };
 
         const addIng = () => {
@@ -112,7 +114,6 @@ export default {
         };
 
         const deleteIng = (id) => {
-            console.log(id);
             const arr = state.recipe.recipeIngredients.filter((el) => el.id !== id);
             state.recipe.recipeIngredients = arr;
         };

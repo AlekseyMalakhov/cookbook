@@ -56,7 +56,9 @@ export default {
                 const onlyNumbers = allowOnlyNumbers(text);
                 state.amount = onlyNumbers;
             }
-            ctx.emit("change-ingredient", state);
+            const res = { ...state };
+            res.id = props.id;
+            ctx.emit("change-ingredient", res);
         };
 
         const deleteIng = () => {

@@ -18,12 +18,14 @@ const client = new MongoClient(uri, {
 });
 
 //connect to DB
-let collection;
+let collectionUsers;
+let collectionRecipes;
 async function run() {
     try {
         await client.connect();
         console.log("Connected correctly to server");
-        collection = client.db("cookbook").collection("users");
+        collectionUsers = client.db("cookbook").collection("users");
+        collectionRecipes = client.db("cookbook").collection("recipes");
     } catch (err) {
         console.log(err.stack);
     } finally {
@@ -41,7 +43,7 @@ app.post("/create_account", (req, res) => {
         const query = {
             name: newAccount.name,
         };
-        const result = await collection.findOne(query);
+        const result = await collectionUsers.findOne(query);
         return result;
     }
     checkForExisting().then((result) => {
@@ -53,7 +55,7 @@ app.post("/create_account", (req, res) => {
     });
 
     async function createAccount() {
-        const result = await collection.insertOne(newAccount);
+        const result = await collectionUsers.insertOne(newAccount);
         res.send(result);
     }
 });
@@ -65,7 +67,7 @@ app.post("/login", (req, res) => {
         const query = {
             name: user.name,
         };
-        const result = await collection.findOne(query);
+        const result = await collectionUsers.findOne(query);
         console.log(result);
         if (!result) {
             res.sendStatus(404);
@@ -83,7 +85,7 @@ app.post("/login", (req, res) => {
 //get all users
 app.get("/users", (req, res) => {
     async function getAllUsers() {
-        const cursor = await collection.find();
+        const cursor = await collectionUsers.find();
         const arr = await cursor.toArray();
         const result = arr.map((user) => {
             delete user.password;
@@ -101,11 +103,9 @@ app.get("/users", (req, res) => {
 
 //create recipe
 app.post("/create_recipe", upload.single("img"), (req, res) => {
-    const newRecipe = req.body;
+    const newRecipe = JSON.parse(req.body.text);
     const img = req.file;
-    console.log(newRecipe);
     console.log(img);
-    res.send(true);
 
     // //check if username is free
     // async function checkForExisting() {
@@ -123,13 +123,11 @@ app.post("/create_recipe", upload.single("img"), (req, res) => {
     //     }
     // });
 
-    console.log(newRecipe);
-
-    // async function createRecipe() {
-    //     const result = await collection.insertOne(newRecipe);
-    //     res.send(result);
-    // }
-    //createRecipe();
+    async function createRecipe() {
+        const result = await collectionRecipes.insertOne(newRecipe);
+        res.send(result);
+    }
+    createRecipe();
 });
 
 //upload image

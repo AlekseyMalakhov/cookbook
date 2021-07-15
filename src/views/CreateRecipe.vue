@@ -64,14 +64,6 @@ import { useStore } from "vuex";
 import { ElNotification } from "element-plus";
 import AddIngredientField from "../components/AddIngredientField.vue";
 
-// let largestNumber;
-// if (idList.length !== 0) {
-//     largestNumber = Math.max(...idList);
-// } else {
-//     largestNumber = 0;
-// }
-// const id = largestNumber + 1;
-
 let ingID = 2;
 
 export default {
@@ -81,7 +73,6 @@ export default {
         const user = computed(() => store.state.User.user);
         const router = useRouter();
         const units = ["none", "g", "kg", "L", "ml", "tea sp.", "table sp."];
-        //const store = useStore();
         const state = reactive({
             recipe: {
                 recipeName: "",
@@ -104,10 +95,18 @@ export default {
         const recipeForm = ref(null);
 
         const send = (recipeObj) => {
-            recipeObj.userID = user.value._id;
+            const obj = { ...recipeObj };
+            delete obj.img;
+            obj.userID = user.value._id;
+            const JSONObj = JSON.stringify(obj);
+            const recipe = {
+                text: JSONObj,
+                img: state.recipe.img,
+            };
+            console.log(recipe);
             const formData = new FormData();
-            for (let x in recipeObj) {
-                formData.append(x, recipeObj[x]);
+            for (let x in recipe) {
+                formData.append(x, recipe[x]);
             }
 
             fetch("http://localhost:3000/create_recipe", {

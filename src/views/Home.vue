@@ -4,7 +4,7 @@
         <el-main>
             <CardList :userID="$route.params.id" />
             <el-tooltip effect="light" content="Add recipe" placement="top" v-if="user">
-                <el-button type="primary" icon="el-icon-plus" circle class="addRecipe"></el-button>
+                <el-button type="primary" icon="el-icon-plus" circle class="addRecipe" @click="createRecipe()"></el-button>
             </el-tooltip>
         </el-main>
     </el-container>
@@ -13,7 +13,7 @@
 <script>
 import CardList from "../components/CardList.vue";
 import Sidebar from "../components/Sidebar.vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { watch, computed } from "vue";
 
@@ -21,6 +21,7 @@ export default {
     name: "Home",
     components: { CardList, Sidebar },
     setup() {
+        const router = useRouter();
         const route = useRoute();
         const store = useStore();
         const user = computed(() => store.state.User.user);
@@ -30,8 +31,12 @@ export default {
                 console.log(route.params.id);
             }
         );
+        const createRecipe = () => {
+            router.push("/create_recipe");
+        };
         return {
             user,
+            createRecipe,
         };
     },
 };

@@ -9,8 +9,7 @@ app.use(express.json());
 //login - megauser
 //pass - 123456789qqq
 const { MongoClient } = require("mongodb");
-const uri =
-    "mongodb+srv://megauser:123456789qqq@cluster0.hsrcs.mongodb.net/cookbook?retryWrites=true&w=majority";
+const uri = "mongodb+srv://megauser:123456789qqq@cluster0.hsrcs.mongodb.net/cookbook?retryWrites=true&w=majority";
 const client = new MongoClient(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -96,6 +95,35 @@ app.get("/users", (req, res) => {
         }
     }
     getAllUsers();
+});
+
+//create recipe
+app.post("/create_recipe", (req, res) => {
+    const newRecipe = req.body;
+
+    // //check if username is free
+    // async function checkForExisting() {
+    //     const query = {
+    //         name: newAccount.name,
+    //     };
+    //     const result = await collection.findOne(query);
+    //     return result;
+    // }
+    // checkForExisting().then(result => {
+    //     if (!result) {
+    //         createAccount();
+    //     } else {
+    //         res.sendStatus(409);
+    //     }
+    // });
+
+    console.log(newRecipe);
+
+    async function createRecipe() {
+        const result = await collection.insertOne(newRecipe);
+        res.send(result);
+    }
+    //createRecipe();
 });
 
 //start the server

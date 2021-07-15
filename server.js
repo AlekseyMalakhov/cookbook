@@ -1,4 +1,6 @@
 const express = require("express");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 const app = express();
 const port = 3000;
 const cors = require("cors");
@@ -42,7 +44,7 @@ app.post("/create_account", (req, res) => {
         const result = await collection.findOne(query);
         return result;
     }
-    checkForExisting().then(result => {
+    checkForExisting().then((result) => {
         if (!result) {
             createAccount();
         } else {
@@ -83,7 +85,7 @@ app.get("/users", (req, res) => {
     async function getAllUsers() {
         const cursor = await collection.find();
         const arr = await cursor.toArray();
-        const result = arr.map(user => {
+        const result = arr.map((user) => {
             delete user.password;
             return user;
         });
@@ -98,8 +100,12 @@ app.get("/users", (req, res) => {
 });
 
 //create recipe
-app.post("/create_recipe", (req, res) => {
+app.post("/create_recipe", upload.single("img"), (req, res) => {
     const newRecipe = req.body;
+    const img = req.file;
+    console.log(newRecipe);
+    console.log(img);
+    res.send(true);
 
     // //check if username is free
     // async function checkForExisting() {
@@ -119,11 +125,17 @@ app.post("/create_recipe", (req, res) => {
 
     console.log(newRecipe);
 
-    async function createRecipe() {
-        const result = await collection.insertOne(newRecipe);
-        res.send(result);
-    }
+    // async function createRecipe() {
+    //     const result = await collection.insertOne(newRecipe);
+    //     res.send(result);
+    // }
     //createRecipe();
+});
+
+//upload image
+app.post("/upload_img", upload.single("recipe"), (req, res) => {
+    const img = req.file;
+    console.log(img);
 });
 
 //start the server

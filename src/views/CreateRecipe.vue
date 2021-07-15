@@ -5,7 +5,7 @@
     <el-row type="flex" justify="center" align="middle">
         <el-form :model="state.recipe" :rules="state.rules" ref="recipeForm" label-width="120px" label-position="top">
             <el-form-item label="Recipe name" prop="recipeName" class="labelRecipe1 labelRecipe2">
-                <el-input v-model="state.recipe.recipeName" class="recipeInput" @keyup.enter="() => submitForm()"></el-input>
+                <el-input v-model="state.recipe.recipeName" class="recipeInput"></el-input>
             </el-form-item>
 
             <AddIngredientField
@@ -33,11 +33,10 @@
                     <el-upload
                         class="imgUpload1 imgUpload2"
                         drag
-                        action="https://jsonplaceholder.typicode.com/posts/"
-                        :on-preview="handlePreview"
-                        :on-remove="handleRemove"
-                        :file-list="fileList"
+                        action="http://localhost:3000/upload_img"
+                        :on-change="handleImgUpload"
                         multiple
+                        :auto-upload="false"
                     >
                         <i class="el-icon-upload"></i>
                         <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
@@ -103,12 +102,14 @@ export default {
         const recipeForm = ref(null);
 
         const send = (recipeObj) => {
+            const formData = new FormData();
+            for (let x in recipeObj) {
+                formData.append(x, recipeObj[x]);
+            }
+
             fetch("http://localhost:3000/create_recipe", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(recipeObj),
+                body: formData,
             })
                 .then((response) => {
                     if (response.status === 200) {
@@ -165,6 +166,22 @@ export default {
             });
         }
 
+        const handleImgUpload = (file) => {
+            // console.log(file.raw);
+            // if (file.size < 10000000) {
+            //     let reader = new FileReader();
+            //     reader.onload = () => {
+            //         //setImageBase64(e.target.result);
+            //         state.recipe.img = file.raw;
+            //     };
+            //     reader.readAsDataURL(file.raw);
+            // } else {
+            //     showError("Image size error!", "The image size must be less 10MB!");
+            // }
+
+            state.recipe.img = file.raw;
+        };
+
         return {
             state,
             units,
@@ -174,9 +191,34 @@ export default {
             changeIng,
             addIng,
             deleteIng,
+            handleImgUpload,
         };
     },
 };
+
+// function sendAccountConfig(platformName, phone, configObj) {
+//             const formData = new FormData();
+//             for (let x in configObj) {
+//                 formData.append(x, configObj[x]);
+//             }
+//             channelService.sendMessagingServiceConfig(platformName, phone, formData).then(result => {
+//                 if (result) {
+//                     saveChannel();
+//                 } else {
+//                     showErrorNotify("Channel not created", "Error on saving a new channel!" );
+//                 }
+//             });
+//         }
+
+// export function sendMessagingServiceConfig(messagingService, identifier, config) { //test
+//     const headers = {"Content-Type": "multipart/form-data"};
+//     return axiosPersistence.post(`messaging-service/account/details/${messagingService}?identifier=${identifier}`, config, {headers: headers}).then(response => {
+//         return true;
+//     }).catch(error => {
+//         console.error(error);
+//         return false;
+//     });
+// }
 </script>
 
 <style lang="scss">
@@ -219,3 +261,10 @@ export default {
     margin-top: 0;
 }
 </style>
+
+function sendAccountConfig(platformName, phone, configObj) { const formData = new FormData(); for (let x in configObj) { formData.append(x,
+configObj[x]); } channelService.sendMessagingServiceConfig(platformName, phone, formData).then(result => { if (result) { saveChannel(); } else {
+showErrorNotify("Channel not created", "Error on saving a new channel!" ); } }); } export function sendMessagingServiceConfig(messagingService,
+identifier, config) { //test const headers = {"Content-Type": "multipart/form-data"}; return
+axiosPersistence.post(`messaging-service/account/details/${messagingService}?identifier=${identifier}`, config, {headers: headers}).then(response => {
+return true; }).catch(error => { console.error(error); return false; }); }

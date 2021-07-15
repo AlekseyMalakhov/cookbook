@@ -1,15 +1,17 @@
 <template>
-    <el-form-item label="Ingredients" prop="recipeForm" class="labelRecipe1 labelRecipe2">
+    <el-form-item :label="label" prop="recipeForm" class="labelRecipe1 labelRecipe2">
         <el-input v-model="state.name" @input="sendData($event)" class="recipeInput" placeholder="Ingredient"></el-input>
         <el-input v-model="state.amount" @input="sendData($event, true)" class="amount" inputMode="numeric" placeholder="Amount"></el-input>
         <el-select v-model="state.unit" @change="sendData($event)" placeholder="Unit" class="unit">
             <el-option v-for="unit in props.units" :key="unit" :label="unit" :value="unit"></el-option>
         </el-select>
+        <el-button type="danger" icon="el-icon-delete" circle style="margin-left: 20px" :class="label ? 'invisible' : ''"></el-button>
     </el-form-item>
 </template>
 
 <script>
 import { reactive } from "@vue/reactivity";
+import { computed } from "@vue/runtime-core";
 const allowOnlyNumbers = (text) => {
     const regex1 = /[^\d]/g;
     const onlyNumbers = text.replace(regex1, "");
@@ -23,12 +25,23 @@ export default {
             type: Array,
             required: true,
         },
+        id: {
+            type: Number,
+            required: true,
+        },
     },
     setup(props, ctx) {
         const state = reactive({
             name: "",
             amount: "",
             unit: "",
+        });
+
+        const label = computed(() => {
+            if (props.id === 1) {
+                return "Ingredients:";
+            }
+            return "";
         });
 
         const sendData = (text, amount) => {
@@ -43,6 +56,7 @@ export default {
             props,
             sendData,
             state,
+            label,
         };
     },
 };
@@ -70,5 +84,9 @@ export default {
 .unit {
     width: 200px;
     margin-left: 20px;
+}
+
+.invisible {
+    visibility: hidden;
 }
 </style>

@@ -13,21 +13,32 @@
 <script>
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
+import { onMounted } from "vue";
+import { useStore } from "vuex";
 
 export default {
     name: "App",
     components: { Header, Footer },
     setup() {
+        const store = useStore();
         const getAllUsers = () => {
             fetch("http://localhost:3000/users")
-                .then(response => {
+                .then((response) => {
                     return response.json();
                 })
-                .then(data => {
+                .then((data) => {
                     console.log(data);
                 });
         };
         getAllUsers();
+
+        onMounted(() => {
+            const existingUser = localStorage.getItem("user");
+            if (existingUser) {
+                const data = JSON.parse(existingUser);
+                store.dispatch("User/setUser", data);
+            }
+        });
     },
 };
 </script>

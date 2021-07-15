@@ -58,9 +58,9 @@
 </template>
 
 <script>
-import { ref, reactive } from "@vue/reactivity";
+import { ref, reactive, computed } from "@vue/reactivity";
 import { useRouter } from "vue-router";
-//import { useStore } from "vuex";
+import { useStore } from "vuex";
 import { ElNotification } from "element-plus";
 import AddIngredientField from "../components/AddIngredientField.vue";
 
@@ -77,6 +77,8 @@ let ingID = 2;
 export default {
     components: { AddIngredientField },
     setup() {
+        const store = useStore();
+        const user = computed(() => store.state.User.user);
         const router = useRouter();
         const units = ["none", "g", "kg", "L", "ml", "tea sp.", "table sp."];
         //const store = useStore();
@@ -102,6 +104,7 @@ export default {
         const recipeForm = ref(null);
 
         const send = (recipeObj) => {
+            recipeObj.userID = user.value._id;
             const formData = new FormData();
             for (let x in recipeObj) {
                 formData.append(x, recipeObj[x]);

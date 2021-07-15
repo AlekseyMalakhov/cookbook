@@ -8,7 +8,7 @@
                 <el-input v-model="state.recipe.recipeName" class="recipeInput" @keyup.enter="() => submitForm()"></el-input>
             </el-form-item>
 
-            <AddIngredientField :recipe="state.recipe" :units="units" @change-ingredient="changeIngredient" />
+            <AddIngredientField :units="units" @change-ingredient="changeIngredient" />
 
             <el-row type="flex" justify="space-around" align="middle">
                 <el-button type="primary" @click="submitForm()">Create</el-button>
@@ -73,8 +73,8 @@ export default {
                 });
         };
 
-        const changeIngredient = () => {
-            console.log("changed");
+        const changeIngredient = ingredient => {
+            console.log(ingredient);
         };
 
         function submitForm() {

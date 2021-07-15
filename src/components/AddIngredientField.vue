@@ -1,8 +1,8 @@
 <template>
     <el-form-item label="Ingredients" prop="recipeForm" class="labelRecipe1 labelRecipe2">
-        <el-input v-model="state.name" class="recipeInput" placeholder="Ingredient"></el-input>
-        <el-input v-model="state.amount" @input="checkName($event)" class="amount" inputMode="numeric" placeholder="Amount"></el-input>
-        <el-select v-model="state.unit" placeholder="Unit" class="unit">
+        <el-input v-model="state.name" @input="sendData($event)" class="recipeInput" placeholder="Ingredient"></el-input>
+        <el-input v-model="state.amount" @input="sendData($event, true)" class="amount" inputMode="numeric" placeholder="Amount"></el-input>
+        <el-select v-model="state.unit" @change="sendData($event)" placeholder="Unit" class="unit">
             <el-option v-for="unit in props.units" :key="unit" :label="unit" :value="unit"></el-option>
         </el-select>
     </el-form-item>
@@ -10,7 +10,7 @@
 
 <script>
 import { reactive } from "@vue/reactivity";
-const allowOnlyNumbers = text => {
+const allowOnlyNumbers = (text) => {
     const regex1 = /[^\d]/g;
     const onlyNumbers = text.replace(regex1, "");
     return onlyNumbers;
@@ -19,31 +19,29 @@ const allowOnlyNumbers = text => {
 export default {
     name: "AddIngredientField",
     props: {
-        recipe: {
-            type: Object,
-            required: false,
-        },
         units: {
             type: Array,
             required: true,
         },
     },
-    setup(props) {
+    setup(props, ctx) {
         const state = reactive({
             name: "",
             amount: "",
             unit: "",
         });
 
-        const checkName = text => {
-            const onlyNumbers = allowOnlyNumbers(text);
-            console.log(onlyNumbers);
-            state.amount = onlyNumbers;
+        const sendData = (text, amount) => {
+            if (amount) {
+                const onlyNumbers = allowOnlyNumbers(text);
+                state.amount = onlyNumbers;
+            }
+            ctx.emit("change-ingredient", state);
         };
 
         return {
             props,
-            checkName,
+            sendData,
             state,
         };
     },

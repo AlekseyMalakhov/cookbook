@@ -1,27 +1,23 @@
 <template>
-    <el-row v-if="!props.userID" type="flex" justify="center" class="title">
+    <el-row v-if="!selectedUser" type="flex" justify="center" class="title">
         Our chefs
     </el-row>
 
-    <el-row v-if="props.userID" style="margin-left: 20px; margin-top: 20px">
-        <router-link to="/" class="chefLink">
-            <el-button type="primary" icon="el-icon-back" circle></el-button>
-        </router-link>
+    <el-row v-if="selectedUser" style="margin-left: 20px; margin-top: 20px">
+        <el-button type="primary" icon="el-icon-back" circle @click="unselectUser()"></el-button>
     </el-row>
 
-    <el-row v-if="props.userID" type="flex" justify="center" class="title">
+    <el-row v-if="selectedUser" type="flex" justify="center" class="title">
         {{ selectedUser.name }}
     </el-row>
 
-    <el-menu v-if="!props.userID">
-        <router-link v-for="user in users" :key="user._id" :to="`/${user._id}`" class="chefLink" @click="selectUser(user)">
-            <el-menu-item>
-                {{ user.name }}
-            </el-menu-item>
-        </router-link>
+    <el-menu v-if="!selectedUser">
+        <el-menu-item v-for="user in users" :key="user._id" @click="selectUser(user)">
+            {{ user.name }}
+        </el-menu-item>
     </el-menu>
 
-    <el-menu v-if="props.userID">
+    <el-menu v-if="selectedUser">
         <router-link v-for="recipe in recipes" :key="recipe._id" :to="`/recipe/${recipe._id}`" class="chefLink">
             <el-menu-item>
                 {{ recipe.recipeName }}
@@ -34,18 +30,12 @@
 import { useStore } from "vuex";
 import { computed } from "vue";
 export default {
-    props: {
-        userID: {
-            type: String,
-            required: false,
-        },
-    },
-    setup(props) {
+    setup() {
         const store = useStore();
         const users = computed(() => store.state.User.users);
         const selectedUser = computed(() => store.state.User.selectedUser);
         const recipes = computed(() => {
-            const rs = store.state.User.recipes.filter((res) => res.userID === props.userID);
+            const rs = store.state.User.recipes.filter((res) => res.userID === selectedUser.value._id);
             console.log([...rs]);
             return rs;
         });
@@ -54,12 +44,16 @@ export default {
             store.dispatch("User/setSelectedUser", user);
         };
 
+        const unselectUser = () => {
+            store.dispatch("User/setSelectedUser", null);
+        };
+
         return {
             users,
             recipes,
-            props,
             selectUser,
             selectedUser,
+            unselectUser,
         };
     },
 };

@@ -11,19 +11,14 @@ import { computed } from "vue";
 
 export default {
     name: "CardList",
-    props: {
-        userID: {
-            type: String,
-            required: false,
-        },
-    },
-    setup(props) {
+    setup() {
         const store = useStore();
+        const selectedUser = computed(() => store.state.User.selectedUser);
         const recipes = computed(() => {
-            if (!props.userID) {
+            if (!selectedUser.value) {
                 return store.state.User.recipes;
             } else {
-                const rs = store.state.User.recipes.filter((res) => res.userID === props.userID);
+                const rs = store.state.User.recipes.filter((res) => res.userID === selectedUser.value._id);
                 return rs;
             }
         });

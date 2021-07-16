@@ -3,12 +3,24 @@ import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import CreateAccount from "../views/CreateAccount.vue";
 import CreateRecipe from "../views/CreateRecipe.vue";
+import CardList from "../components/CardList.vue";
+//import RecipeView from "../components/RecipeView.vue";
 
 const routes = [
     {
-        path: "/:id?",
+        path: "/",
         name: "Home",
         component: Home,
+        children: [
+            {
+                path: "/",
+                component: CardList,
+            },
+            // {
+            //     path: "/:id",
+            //     component: RecipeView,
+            // },
+        ],
     },
     {
         path: "/login",

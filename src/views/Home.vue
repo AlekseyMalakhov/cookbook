@@ -1,8 +1,8 @@
 <template>
     <el-container>
-        <el-aside width="200px"><Sidebar :userID="$route.params.id"/></el-aside>
+        <el-aside width="200px"><Sidebar /></el-aside>
         <el-main>
-            <CardList :userID="$route.params.id" />
+            <router-view />
             <el-tooltip effect="light" content="Add recipe" placement="top" v-if="user">
                 <el-button type="primary" icon="el-icon-plus" circle class="addRecipe" @click="createRecipe()"></el-button>
             </el-tooltip>
@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import CardList from "../components/CardList.vue";
 import Sidebar from "../components/Sidebar.vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
@@ -19,7 +18,7 @@ import { computed } from "vue";
 
 export default {
     name: "Home",
-    components: { CardList, Sidebar },
+    components: { Sidebar },
     setup() {
         const router = useRouter();
         const store = useStore();

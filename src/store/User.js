@@ -3,6 +3,7 @@ export const UserModule = {
 
     state: {
         user: null,
+        users: [],
         recipes: [],
     },
 
@@ -10,6 +11,9 @@ export const UserModule = {
     mutations: {
         SET_USER(state, user) {
             state.user = user;
+        },
+        SET_USERS(state, users) {
+            state.users = users;
         },
         SET_RECIPES(state, recipes) {
             state.recipes = recipes;
@@ -20,6 +24,9 @@ export const UserModule = {
     actions: {
         setUser({ commit }, user) {
             commit("SET_USER", user);
+        },
+        setUsers({ commit }, users) {
+            commit("SET_USERS", users);
         },
         setRecipes({ commit }, recipes) {
             commit("SET_RECIPES", recipes);

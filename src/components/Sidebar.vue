@@ -4,25 +4,27 @@
     </el-row>
 
     <el-menu>
-        <el-menu-item index="1" v-for="recipe in state.recipes" :key="recipe.id">
-            <router-link :to="`/${recipe.userID}`" class="chefLink">
-                {{ recipe.user }}
+        <el-menu-item index="1" v-for="user in users" :key="user._id">
+            <router-link :to="`/${user._id}`" class="chefLink">
+                {{ user.name }}
             </router-link>
         </el-menu-item>
     </el-menu>
 </template>
 
 <script>
-import { recipesList } from "../mock_data/mock_db";
-import { reactive } from "vue";
+import { useStore } from "vuex";
+import { computed } from "vue";
 export default {
     setup() {
-        const state = reactive({
-            recipes: recipesList,
-        });
+        const store = useStore();
+        const users = computed(() => store.state.User.users);
+        // const state = reactive({
+        //     recipes: recipesList,
+        // });
 
         return {
-            state,
+            users,
         };
     },
 };

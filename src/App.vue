@@ -28,6 +28,7 @@ export default {
                 })
                 .then((data) => {
                     console.log(data);
+                    store.dispatch("User/setUsers", data);
                 });
         };
         getAllUsers();
@@ -39,6 +40,7 @@ export default {
                 })
                 .then((data) => {
                     console.log(data);
+                    store.dispatch("User/setRecipes", data);
                 });
         };
         getAllRecipes();

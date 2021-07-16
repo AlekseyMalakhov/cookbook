@@ -19,15 +19,14 @@
     </el-row>
     <el-row type="flex" justify="center" align="middle" class="signUp">
         Don't have an account? &nbsp; <router-link to="/create_account">Create one.</router-link>
-    </el-row>   
-    
+    </el-row>
 </template>
 
 <script>
-import { ref, reactive } from '@vue/reactivity';
-import { useRouter } from 'vue-router';
-import { useStore } from 'vuex'
-import { ElNotification } from 'element-plus';
+import { ref, reactive } from "@vue/reactivity";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+import { showError } from "../utilities";
 
 export default {
     setup() {
@@ -40,12 +39,8 @@ export default {
                 password: "",
             },
             rules: {
-                name: [
-                    {required: true, message: "Please, enter username", trigger: "change"},
-                ],
-                password: [
-                    {required: true, message: "Please, enter password", trigger: "change"},
-                ],
+                name: [{ required: true, message: "Please, enter username", trigger: "change" }],
+                password: [{ required: true, message: "Please, enter password", trigger: "change" }],
             },
         });
 
@@ -55,38 +50,38 @@ export default {
             fetch("http://localhost:3000/login", {
                 method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify(credentials),
             })
-            .then(response => {
-                if (response.status === 200) {
-                    return response.json();                    
-                } else {
-                    showError("Login or password is incorrect");
-                }               
-            })
-            .then(data => {
-                if (data.name) {
-                    localStorage.setItem("user", JSON.stringify(data));
-                    store.dispatch("User/setUser", data);
-                    router.push("/");
-                } else {
+                .then((response) => {
+                    if (response.status === 200) {
+                        return response.json();
+                    } else {
+                        showError("Login or password is incorrect");
+                    }
+                })
+                .then((data) => {
+                    if (data.name) {
+                        localStorage.setItem("user", JSON.stringify(data));
+                        store.dispatch("User/setUser", data);
+                        router.push("/");
+                    } else {
+                        showError("Something went wrong :( Please contact administrator");
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
                     showError("Something went wrong :( Please contact administrator");
-                }
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                showError("Something went wrong :( Please contact administrator");
-            });
-        }
+                });
+        };
 
         function submitForm() {
-            this.loginForm.validate(valid => {
+            this.loginForm.validate((valid) => {
                 if (valid) {
                     send(this.state.login);
                 }
-            });            
+            });
         }
 
         function cancel() {
@@ -94,32 +89,24 @@ export default {
             router.push("/");
         }
 
-        function showError(text) {
-            ElNotification.error({
-                title: 'Error',
-                message: text,
-            });
-        }
-
         return {
             state,
             submitForm,
             loginForm,
             cancel,
-        }
+        };
     },
-}
+};
 </script>
 
 <style lang="scss">
-    .labelLogin1.labelLogin2 label {
-        padding-bottom: 0;
-    }
-    .loginInput {
-        width: 300px;
-    }
-    .signUp {
-        margin-top: 25px;
-    }
-
+.labelLogin1.labelLogin2 label {
+    padding-bottom: 0;
+}
+.loginInput {
+    width: 300px;
+}
+.signUp {
+    margin-top: 25px;
+}
 </style>

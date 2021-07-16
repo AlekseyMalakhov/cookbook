@@ -61,7 +61,7 @@
 import { ref, reactive, computed } from "@vue/reactivity";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
-import { ElNotification } from "element-plus";
+import { showError, showSuccess } from "../utilities";
 import AddIngredientField from "../components/AddIngredientField.vue";
 
 let ingID = 2;
@@ -160,33 +160,7 @@ export default {
             router.push("/");
         }
 
-        function showError(text) {
-            ElNotification.error({
-                title: "Error",
-                message: text,
-            });
-        }
-
-        function showSuccess(text) {
-            ElNotification.success({
-                title: "Success",
-                message: text,
-            });
-        }
-
         const handleImgUpload = (file) => {
-            // console.log(file.raw);
-            // if (file.size < 10000000) {
-            //     let reader = new FileReader();
-            //     reader.onload = () => {
-            //         //setImageBase64(e.target.result);
-            //         state.recipe.img = file.raw;
-            //     };
-            //     reader.readAsDataURL(file.raw);
-            // } else {
-            //     showError("Image size error!", "The image size must be less 10MB!");
-            // }
-
             state.recipe.img = file.raw;
         };
 
@@ -203,30 +177,6 @@ export default {
         };
     },
 };
-
-// function sendAccountConfig(platformName, phone, configObj) {
-//             const formData = new FormData();
-//             for (let x in configObj) {
-//                 formData.append(x, configObj[x]);
-//             }
-//             channelService.sendMessagingServiceConfig(platformName, phone, formData).then(result => {
-//                 if (result) {
-//                     saveChannel();
-//                 } else {
-//                     showErrorNotify("Channel not created", "Error on saving a new channel!" );
-//                 }
-//             });
-//         }
-
-// export function sendMessagingServiceConfig(messagingService, identifier, config) { //test
-//     const headers = {"Content-Type": "multipart/form-data"};
-//     return axiosPersistence.post(`messaging-service/account/details/${messagingService}?identifier=${identifier}`, config, {headers: headers}).then(response => {
-//         return true;
-//     }).catch(error => {
-//         console.error(error);
-//         return false;
-//     });
-// }
 </script>
 
 <style lang="scss">
@@ -269,10 +219,3 @@ export default {
     margin-top: 0;
 }
 </style>
-
-function sendAccountConfig(platformName, phone, configObj) { const formData = new FormData(); for (let x in configObj) { formData.append(x,
-configObj[x]); } channelService.sendMessagingServiceConfig(platformName, phone, formData).then(result => { if (result) { saveChannel(); } else {
-showErrorNotify("Channel not created", "Error on saving a new channel!" ); } }); } export function sendMessagingServiceConfig(messagingService,
-identifier, config) { //test const headers = {"Content-Type": "multipart/form-data"}; return
-axiosPersistence.post(`messaging-service/account/details/${messagingService}?identifier=${identifier}`, config, {headers: headers}).then(response => {
-return true; }).catch(error => { console.error(error); return false; }); }

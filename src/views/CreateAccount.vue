@@ -20,14 +20,12 @@
             </el-row>
         </el-form>
     </el-row>
-    
-    
 </template>
 
 <script>
-import { ref, reactive } from '@vue/reactivity';
-import { useRouter } from 'vue-router';
-import { ElNotification } from 'element-plus';
+import { ref, reactive } from "@vue/reactivity";
+import { useRouter } from "vue-router";
+import { showError, showSuccess } from "../utilities";
 
 export default {
     setup() {
@@ -40,15 +38,9 @@ export default {
                 password2: "",
             },
             rules: {
-                name: [
-                    {required: true, message: "Please, enter username", trigger: "change"},
-                ],
-                password1: [
-                    {required: true, message: "Please, enter password", trigger: "change"},
-                ],
-                password2: [
-                    {required: true, message: "Please, enter password", trigger: "change"},
-                ],
+                name: [{ required: true, message: "Please, enter username", trigger: "change" }],
+                password1: [{ required: true, message: "Please, enter password", trigger: "change" }],
+                password2: [{ required: true, message: "Please, enter password", trigger: "change" }],
             },
         });
 
@@ -58,30 +50,30 @@ export default {
             fetch("http://localhost:3000/create_account", {
                 method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify(account),
             })
-            .then(response => {
-                if (response.status === 200) {
-                    showSuccess("Account successfully created.");
-                    return response.json();                    
-                } else {
-                    showError(`Login ${account.name} already exists. Please, try another one.` );
-                }  
-            })
-            .then(data => console.log(data))
-            .catch((error) => {
-                console.error('Error:', error);
-                showError("Something went wrong :( Please contact administrator");
-            });
-        }
+                .then((response) => {
+                    if (response.status === 200) {
+                        showSuccess("Account successfully created.");
+                        return response.json();
+                    } else {
+                        showError(`Login ${account.name} already exists. Please, try another one.`);
+                    }
+                })
+                .then((data) => console.log(data))
+                .catch((error) => {
+                    console.error("Error:", error);
+                    showError("Something went wrong :( Please contact administrator");
+                });
+        };
 
         function submitForm() {
-            this.loginForm.validate(valid => {
+            this.loginForm.validate((valid) => {
                 if (valid) {
                     if (this.state.login.password1 === this.state.login.password2) {
-                        const account = {...this.state.login};
+                        const account = { ...this.state.login };
                         account.password = account.password1;
                         delete account.password1;
                         delete account.password2;
@@ -89,7 +81,7 @@ export default {
                         console.log(account);
                     }
                 }
-            });            
+            });
         }
 
         function cancel() {
@@ -97,30 +89,16 @@ export default {
             router.push("/");
         }
 
-        function showError(text) {
-            ElNotification.error({
-                title: 'Error',
-                message: text,
-            });
-        }
-
-        function showSuccess(text) {
-            ElNotification.success({
-                title: 'Success',
-                message: text,
-            });
-        }
-
         return {
             state,
             submitForm,
             loginForm,
             cancel,
-        }
+        };
     },
-}
+};
 </script>
 
 <style lang="scss">
-    //classes look at the Login component
+//classes look at the Login component
 </style>

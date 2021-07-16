@@ -1,6 +1,6 @@
 <template>
     <el-row class="background" justify="center">
-        <h2>Create a new recipe</h2>
+        <h2>View recipe</h2>
     </el-row>
 </template>
 

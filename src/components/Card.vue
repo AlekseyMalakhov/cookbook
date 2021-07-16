@@ -1,29 +1,34 @@
 <template>
     <el-card :body-style="{ padding: '0px' }">
-        <img :src="recipe.img" class="image">
+        <img :src="mockImg" class="image" />
         <div style="padding: 14px;" class="info">
-            <div class="user">{{recipe.user}}</div>
-            <span>{{recipe.recipeName}}</span>
+            <div class="user">{{ recipe.user }}</div>
+            <span>{{ recipe.recipeName }}</span>
             <div class="bottom">
-                <time class="time">{{ recipe.date}}</time>
-                <el-button type="text" class="button">Recipe</el-button>
+                <time class="time">{{ recipe.date }}</time>
+                <router-link :to="`/recipe/${recipe._id}`" style="text-decoration: none;">
+                    <el-button type="text" class="button">Try it</el-button>
+                </router-link>
             </div>
         </div>
     </el-card>
 </template>
 
 <script>
+import mockImg from "../mockImg";
 export default {
     props: {
         recipe: {
             type: Object,
             required: true,
-        }
+        },
     },
     setup() {
-
+        return {
+            mockImg,
+        };
     },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -36,7 +41,6 @@ export default {
     color: #999;
     margin-bottom: 10px;
     display: flex;
-
 }
 
 .info {
@@ -68,6 +72,4 @@ time {
     width: 100%;
     display: block;
 }
-
-
 </style>

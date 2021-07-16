@@ -25,6 +25,11 @@ const routes = [
         name: "CreateRecipe",
         component: CreateRecipe,
     },
+    {
+        path: "/recipe/:recipe_id",
+        name: "CreateRecipe",
+        component: CreateRecipe,
+    },
 ];
 
 const router = createRouter({

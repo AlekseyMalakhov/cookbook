@@ -1,6 +1,6 @@
 <template>
     <el-container>
-        <el-aside width="200px"><Sidebar /></el-aside>
+        <el-aside width="200px"><Sidebar :userID="$route.params.id"/></el-aside>
         <el-main>
             <CardList :userID="$route.params.id" />
             <el-tooltip effect="light" content="Add recipe" placement="top" v-if="user">

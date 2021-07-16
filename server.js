@@ -125,22 +125,6 @@ app.post("/create_recipe", upload.single("img"), (req, res) => {
     const img = req.file;
     console.log(img);
 
-    // //check if username is free
-    // async function checkForExisting() {
-    //     const query = {
-    //         name: newAccount.name,
-    //     };
-    //     const result = await collection.findOne(query);
-    //     return result;
-    // }
-    // checkForExisting().then(result => {
-    //     if (!result) {
-    //         createAccount();
-    //     } else {
-    //         res.sendStatus(409);
-    //     }
-    // });
-
     async function createRecipe() {
         const result = await collectionRecipes.insertOne(newRecipe);
         res.send(result);

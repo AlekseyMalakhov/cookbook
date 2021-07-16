@@ -98,6 +98,10 @@ export default {
             const obj = { ...recipeObj };
             delete obj.img;
             obj.userID = user.value._id;
+            const date = new Date(Date.now());
+            const dateString = date.toLocaleDateString("en-GB");
+            obj.date = dateString;
+            obj.user = user.value.name;
             const JSONObj = JSON.stringify(obj);
             const recipe = {
                 text: JSONObj,

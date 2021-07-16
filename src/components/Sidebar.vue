@@ -2,6 +2,13 @@
     <el-row v-if="!props.userID" type="flex" justify="center" class="title">
         Our chefs
     </el-row>
+
+    <el-row v-if="props.userID" style="margin-left: 20px; margin-top: 20px">
+        <router-link to="/" class="chefLink">
+            <el-button type="primary" icon="el-icon-back" circle></el-button>
+        </router-link>
+    </el-row>
+
     <el-row v-if="props.userID" type="flex" justify="center" class="title">
         {{ selectedUser.name }}
     </el-row>
@@ -15,7 +22,7 @@
     </el-menu>
 
     <el-menu v-if="props.userID">
-        <router-link v-for="recipe in recipes" :key="recipe._id" :to="`/${recipe._id}`" class="chefLink">
+        <router-link v-for="recipe in recipes" :key="recipe._id" :to="`/recipe/${recipe._id}`" class="chefLink">
             <el-menu-item>
                 {{ recipe.recipeName }}
             </el-menu-item>

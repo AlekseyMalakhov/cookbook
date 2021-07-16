@@ -32,6 +32,17 @@ export default {
         };
         getAllUsers();
 
+        const getAllRecipes = () => {
+            fetch("http://localhost:3000/recipes")
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log(data);
+                });
+        };
+        getAllRecipes();
+
         onMounted(() => {
             const existingUser = localStorage.getItem("user");
             if (existingUser) {

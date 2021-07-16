@@ -101,6 +101,24 @@ app.get("/users", (req, res) => {
     getAllUsers();
 });
 
+//get all recipes
+app.get("/recipes", (req, res) => {
+    async function getAllRecipes() {
+        const cursor = await collectionRecipes.find();
+        const arr = await cursor.toArray();
+        const result = arr.map((recipe) => {
+            return recipe;
+        });
+        if (!result) {
+            res.sendStatus(403);
+            return;
+        } else {
+            res.send(result);
+        }
+    }
+    getAllRecipes();
+});
+
 //create recipe
 app.post("/create_recipe", upload.single("img"), (req, res) => {
     const newRecipe = JSON.parse(req.body.text);

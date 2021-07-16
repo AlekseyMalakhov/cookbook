@@ -57,7 +57,7 @@ export default {
                 .then((response) => {
                     if (response.status === 200) {
                         showSuccess("Account successfully created.");
-                        return response.json();
+                        router.push("/");
                     } else {
                         showError(`Login ${account.name} already exists. Please, try another one.`);
                     }

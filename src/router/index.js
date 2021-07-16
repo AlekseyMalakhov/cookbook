@@ -4,7 +4,7 @@ import Login from "../views/Login.vue";
 import CreateAccount from "../views/CreateAccount.vue";
 import CreateRecipe from "../views/CreateRecipe.vue";
 import CardList from "../components/CardList.vue";
-//import RecipeView from "../components/RecipeView.vue";
+import RecipeView from "../components/RecipeView.vue";
 
 const routes = [
     {
@@ -16,10 +16,10 @@ const routes = [
                 path: "/",
                 component: CardList,
             },
-            // {
-            //     path: "/:id",
-            //     component: RecipeView,
-            // },
+            {
+                path: "/recipe/:recipe_id",
+                component: RecipeView,
+            },
         ],
     },
     {
@@ -34,11 +34,6 @@ const routes = [
     },
     {
         path: "/create_recipe",
-        name: "CreateRecipe",
-        component: CreateRecipe,
-    },
-    {
-        path: "/recipe/:recipe_id",
         name: "CreateRecipe",
         component: CreateRecipe,
     },

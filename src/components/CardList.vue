@@ -6,7 +6,7 @@
 
 <script>
 import Card from "./Card.vue";
-import { recipesList } from "../mock_data/mock_db";
+import { useStore } from "vuex";
 import { computed } from "vue";
 
 export default {
@@ -18,12 +18,12 @@ export default {
         },
     },
     setup(props) {
+        const store = useStore();
         const recipes = computed(() => {
             if (!props.userID) {
-                return recipesList;
+                return store.state.User.recipes;
             } else {
-                const rs = recipesList.filter((res) => res.userID === Number.parseInt(props.userID));
-                console.log(rs);
+                const rs = store.state.User.recipes.filter((res) => res.userID === props.userID);
                 return rs;
             }
         });

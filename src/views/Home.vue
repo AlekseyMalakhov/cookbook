@@ -13,24 +13,17 @@
 <script>
 import CardList from "../components/CardList.vue";
 import Sidebar from "../components/Sidebar.vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import { useStore } from "vuex";
-import { watch, computed } from "vue";
+import { computed } from "vue";
 
 export default {
     name: "Home",
     components: { CardList, Sidebar },
     setup() {
         const router = useRouter();
-        const route = useRoute();
         const store = useStore();
         const user = computed(() => store.state.User.user);
-        watch(
-            () => route.params.id,
-            () => {
-                console.log(route.params.id);
-            }
-        );
         const createRecipe = () => {
             router.push("/create_recipe");
         };

@@ -20,10 +20,9 @@ export default {
     setup(props) {
         const recipes = computed(() => {
             if (!props.userID) {
-                console.log("here");
                 return recipesList;
             } else {
-                const rs = recipesList.filter(res => res.userID === Number.parseInt(props.userID));
+                const rs = recipesList.filter((res) => res.userID === Number.parseInt(props.userID));
                 console.log(rs);
                 return rs;
             }

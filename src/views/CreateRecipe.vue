@@ -115,9 +115,10 @@ export default {
             })
                 .then((response) => {
                     if (response.status === 200) {
-                        return response.json();
+                        showSuccess("Recipe successfully created");
+                        router.push("/");
                     } else {
-                        showError("Recipe successfully created");
+                        showError("Error! Recipe has not been created!");
                     }
                 })
                 .catch((error) => {
@@ -128,7 +129,6 @@ export default {
 
         const changeIng = (ingr) => {
             const index = state.recipe.recipeIngredients.findIndex((el) => el.id === ingr.id);
-            console.log(index);
             state.recipe.recipeIngredients[index] = ingr;
         };
 
@@ -157,13 +157,19 @@ export default {
         }
 
         function cancel() {
-            this.recipeForm.resetFields();
             router.push("/");
         }
 
         function showError(text) {
             ElNotification.error({
                 title: "Error",
+                message: text,
+            });
+        }
+
+        function showSuccess(text) {
+            ElNotification.success({
+                title: "Success",
                 message: text,
             });
         }

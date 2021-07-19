@@ -1,5 +1,5 @@
 <template>
-    <div class="background">
+    <div class="background" v-if="selectedRecipe">
         <el-row justify="center">
             <el-col :span="24">
                 <h2>{{ selectedRecipe.recipeName }}</h2>
@@ -21,7 +21,7 @@
                 <img :src="mockImg" class="image" />
             </el-col>
         </el-row>
-        <el-row justify="start" style="text-align: start; padding: 20px 20px 20px 20px">
+        <el-row justify="start" style="text-align: start; padding: 40px 20px 20px 20px">
             {{ selectedRecipe.recipeText }}
         </el-row>
     </div>

@@ -21,27 +21,8 @@ export default {
     components: { Header, Footer },
     setup() {
         const store = useStore();
-        const getAllUsers = () => {
-            fetch("http://localhost:3000/users")
-                .then((response) => {
-                    return response.json();
-                })
-                .then((data) => {
-                    store.dispatch("User/setUsers", data);
-                });
-        };
-        getAllUsers();
-
-        const getAllRecipes = () => {
-            fetch("http://localhost:3000/recipes")
-                .then((response) => {
-                    return response.json();
-                })
-                .then((data) => {
-                    store.dispatch("User/setRecipes", data);
-                });
-        };
-        getAllRecipes();
+        store.dispatch("User/getAllUsers");
+        store.dispatch("User/getAllRecipes");
 
         onMounted(() => {
             const existingUser = localStorage.getItem("user");

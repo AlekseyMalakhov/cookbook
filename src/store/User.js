@@ -32,11 +32,23 @@ export const UserModule = {
         setSelectedUser({ commit }, selectedUser) {
             commit("SET_SELECTED_USER", selectedUser);
         },
-        setUsers({ commit }, users) {
-            commit("SET_USERS", users);
+        getAllUsers({ commit }) {
+            fetch("http://localhost:3000/users")
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    commit("SET_USERS", data);
+                });
         },
-        setRecipes({ commit }, recipes) {
-            commit("SET_RECIPES", recipes);
+        getAllRecipes({ commit }) {
+            fetch("http://localhost:3000/recipes")
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    commit("SET_RECIPES", data);
+                });
         },
     },
 };

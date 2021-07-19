@@ -36,7 +36,6 @@ export default {
         const selectedUser = computed(() => store.state.User.selectedUser);
         const recipes = computed(() => {
             const rs = store.state.User.recipes.filter((res) => res.userID === selectedUser.value._id);
-            console.log([...rs]);
             return rs;
         });
 

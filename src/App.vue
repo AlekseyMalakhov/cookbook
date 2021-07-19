@@ -27,7 +27,6 @@ export default {
                     return response.json();
                 })
                 .then((data) => {
-                    console.log(data);
                     store.dispatch("User/setUsers", data);
                 });
         };
@@ -39,7 +38,6 @@ export default {
                     return response.json();
                 })
                 .then((data) => {
-                    console.log(data);
                     store.dispatch("User/setRecipes", data);
                 });
         };

@@ -83,6 +83,7 @@ export default {
                     if (response.status === 200) {
                         showSuccess("Recipe has been successfully deleted.");
                         centerDialogVisible.value = false;
+                        store.dispatch("User/getAllRecipes");
                         router.push("/");
                     } else {
                         showError("Something went wrong :( Please contact administrator");

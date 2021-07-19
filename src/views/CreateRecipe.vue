@@ -120,6 +120,7 @@ export default {
                 .then((response) => {
                     if (response.status === 200) {
                         showSuccess("Recipe successfully created");
+                        store.dispatch("User/getAllRecipes");
                         router.push("/");
                     } else {
                         showError("Error! Recipe has not been created!");

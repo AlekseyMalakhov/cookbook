@@ -10,7 +10,7 @@ app.use(express.json());
 //DB account info
 //login - megauser
 //pass - 123456789qqq
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 const uri = "mongodb+srv://megauser:123456789qqq@cluster0.hsrcs.mongodb.net/cookbook?retryWrites=true&w=majority";
 const client = new MongoClient(uri, {
     useNewUrlParser: true,
@@ -130,6 +130,23 @@ app.post("/create_recipe", upload.single("img"), (req, res) => {
         res.send(result);
     }
     createRecipe();
+});
+
+//delete recipe
+app.delete("/delete_recipe/:id", (req, res) => {
+    const id = req.params.id;
+    const query = {
+        _id: new ObjectId(id),
+    };
+    async function deleteRecipe() {
+        const result = await collectionRecipes.deleteOne(query);
+        if (result.deletedCount === 1) {
+            res.send(result);
+        } else {
+            res.sendStatus(404);
+        }
+    }
+    deleteRecipe();
 });
 
 //upload image

@@ -49,7 +49,7 @@
         <template #footer>
             <div style="display: flex; justify-content: space-evenly">
                 <el-button @click="centerDialogVisible = false">Cancel</el-button>
-                <el-button type="primary" @click="centerDialogVisible = false">Confirm</el-button>
+                <el-button type="primary" @click="deleteRecipe()">Confirm</el-button>
             </div>
         </template>
     </el-dialog>
@@ -60,22 +60,47 @@ import { computed } from "@vue/runtime-core";
 import mockImg from "../mockImg";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 import { ref } from "vue";
+import { showError, showSuccess } from "../utilities";
 export default {
     setup() {
         const store = useStore();
         const user = computed(() => store.state.User.user);
         const recipes = computed(() => store.state.User.recipes);
+        const router = useRouter();
         const route = useRoute();
         const selectedRecipe = computed(() => {
             return recipes.value.find((res) => res._id === route.params.recipe_id);
         });
         const centerDialogVisible = ref(false);
+
+        const deleteRecipe = () => {
+            fetch(`http://localhost:3000/delete_recipe/${selectedRecipe.value._id}`, {
+                method: "DELETE",
+            })
+                .then((response) => {
+                    if (response.status === 200) {
+                        showSuccess("Recipe has been successfully deleted.");
+                        centerDialogVisible.value = false;
+                        router.push("/");
+                    } else {
+                        showError("Something went wrong :( Please contact administrator");
+                        centerDialogVisible.value = false;
+                        router.push("/");
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                    showError("Something went wrong :( Please contact administrator");
+                });
+        };
         return {
             selectedRecipe,
             mockImg,
             centerDialogVisible,
             user,
+            deleteRecipe,
         };
     },
 };

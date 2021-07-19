@@ -1,13 +1,13 @@
 <template>
     <el-row v-if="!selectedUser" type="flex" justify="center" class="title">
-        Our chefs
+        Our users
     </el-row>
 
-    <el-row v-if="selectedUser" style="margin-left: 20px; margin-top: 20px">
+    <el-row v-if="selectedUser" style="margin: 11px 0 12px 20px">
         <el-button type="primary" icon="el-icon-back" circle @click="unselectUser()"></el-button>
     </el-row>
 
-    <el-row v-if="selectedUser" type="flex" justify="center" class="title">
+    <el-row v-if="selectedUser" type="flex" justify="center" class="selectedUser">
         {{ selectedUser.name }}
     </el-row>
 
@@ -62,10 +62,13 @@ export default {
 .title {
     font-size: 20px;
     padding-top: 20px;
+    margin-bottom: 20px;
 }
 
-.el-menu {
-    margin-top: 20px;
+.selectedUser {
+    padding-top: 20px;
+    background-color: white;
+    font-weight: bold;
 }
 
 .chefLink {

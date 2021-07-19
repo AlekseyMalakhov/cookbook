@@ -14,9 +14,9 @@
                     <template #dropdown>
                         <el-dropdown-menu>
                             <el-dropdown-item>
-                                <router-link :to="`/${user._id}`" class="chefLink">
+                                <!-- <router-link :to="`/${user._id}`" class="chefLink">
                                     My recepies
-                                </router-link>
+                                </router-link> -->
                             </el-dropdown-item>
                             <el-dropdown-item @click="logout">Logout</el-dropdown-item>
                         </el-dropdown-menu>

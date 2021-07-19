@@ -1,12 +1,24 @@
 <template>
     <div class="background" v-if="selectedRecipe">
-        <el-row justify="center">
-            <el-col :span="24">
-                <h2>{{ selectedRecipe.recipeName }}</h2>
+        <el-row type="flex" justify="center">
+            <h2>{{ selectedRecipe.recipeName }}</h2>
+        </el-row>
+        <el-row class="userAndDateContainer" type="flex" justify="start" direction="horizontal">
+            <el-col :push="8" :span="8" style="display: flex">
+                <div>
+                    <el-avatar :size="50" :src="''" class="avatar">
+                        <i class="el-icon-s-custom" />
+                    </el-avatar>
+                </div>
+                <div style="margin-left: 10px; min-width: 300 mm">
+                    <div class="userAndDate">{{ selectedRecipe.user }}</div>
+                    <div class="userAndDate">{{ selectedRecipe.date }}</div>
+                </div>
             </el-col>
+            <el-col :span="8"></el-col>
         </el-row>
 
-        <el-row justify="center" style="text-align: start">
+        <el-row type="flex" justify="center">
             <el-col :span="12" style="padding-left: 20px">
                 <h4 style="padding-left: 30px">Ingredients:</h4>
                 <el-row>
@@ -21,7 +33,7 @@
                 <img :src="mockImg" class="image" />
             </el-col>
         </el-row>
-        <el-row justify="start" style="text-align: start; padding: 40px 20px 20px 20px">
+        <el-row justify="start" style="padding: 40px 20px 20px 20px">
             {{ selectedRecipe.recipeText }}
         </el-row>
     </div>
@@ -61,5 +73,18 @@ export default {
 }
 .image {
     max-width: 300px;
+}
+.userAndDateContainer {
+    margin-bottom: 20px;
+}
+.avatar {
+    font-size: 30px;
+}
+.avatar:hover {
+    background-color: #aaaeb5;
+}
+.userAndDate {
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 </style>

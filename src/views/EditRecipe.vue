@@ -1,6 +1,6 @@
 <template>
     <el-row type="flex" justify="center" align="middle">
-        <h2>Edit recipe</h2>
+        <h2>Edit recipe {{ selectedRecipe.recipeName }}</h2>
     </el-row>
     <el-row type="flex" justify="center" align="middle">
         <el-form :model="state.recipe" :rules="state.rules" ref="recipeForm" label-width="120px" label-position="top">
@@ -59,7 +59,7 @@
 
 <script>
 import { ref, reactive, computed } from "@vue/reactivity";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { showError, showSuccess } from "../utilities";
 import AddIngredientField from "../components/AddIngredientField.vue";
@@ -71,8 +71,13 @@ export default {
     setup() {
         const store = useStore();
         const user = computed(() => store.state.User.user);
+        const recipes = computed(() => store.state.User.recipes);
         const router = useRouter();
+        const route = useRoute();
         const units = ["none", "g", "kg", "L", "ml", "tea sp.", "table sp."];
+        const selectedRecipe = computed(() => {
+            return recipes.value.find((res) => res._id === route.params.recipe_id);
+        });
         const state = reactive({
             recipe: {
                 recipeName: "",
@@ -179,6 +184,7 @@ export default {
             addIng,
             deleteIng,
             handleImgUpload,
+            selectedRecipe,
         };
     },
 };

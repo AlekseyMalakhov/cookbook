@@ -36,7 +36,23 @@
         <el-row justify="start" style="padding: 40px 20px 20px 20px">
             {{ selectedRecipe.recipeText }}
         </el-row>
+        <el-row type="flex" justify="end" style="margin-right: 30px; margin-top: 20px">
+            <el-button type="primary" round>Edit</el-button>
+            <el-button type="danger" round @click="centerDialogVisible = true">Delete</el-button>
+        </el-row>
     </div>
+
+    <el-dialog title="Warning" v-model="centerDialogVisible" width="25%" center>
+        <div style="display: flex; justify-content: center">
+            <span>Do you realy want to delete this recipe?</span>
+        </div>
+        <template #footer>
+            <div style="display: flex; justify-content: space-evenly">
+                <el-button @click="centerDialogVisible = false">Cancel</el-button>
+                <el-button type="primary" @click="centerDialogVisible = false">Confirm</el-button>
+            </div>
+        </template>
+    </el-dialog>
 </template>
 
 <script>
@@ -44,6 +60,7 @@ import { computed } from "@vue/runtime-core";
 import mockImg from "../mockImg";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
+import { ref } from "vue";
 export default {
     setup() {
         const store = useStore();
@@ -52,9 +69,11 @@ export default {
         const selectedRecipe = computed(() => {
             return recipes.value.find((res) => res._id === route.params.recipe_id);
         });
+        const centerDialogVisible = ref(false);
         return {
             selectedRecipe,
             mockImg,
+            centerDialogVisible,
         };
     },
 };

@@ -5,6 +5,7 @@ import CreateAccount from "../views/CreateAccount.vue";
 import CreateRecipe from "../views/CreateRecipe.vue";
 import CardList from "../components/CardList.vue";
 import RecipeView from "../components/RecipeView.vue";
+import EditRecipe from "../views/EditRecipe.vue";
 
 const routes = [
     {
@@ -36,6 +37,11 @@ const routes = [
         path: "/create_recipe",
         name: "CreateRecipe",
         component: CreateRecipe,
+    },
+    {
+        path: "/edit_recipe/:recipe_id",
+        name: "EditRecipe",
+        component: EditRecipe,
     },
 ];
 

@@ -37,7 +37,7 @@
             {{ selectedRecipe.recipeText }}
         </el-row>
         <el-row type="flex" justify="end" style="margin-right: 30px; margin-top: 20px" v-if="user && user._id === selectedRecipe.userID">
-            <el-button type="primary" round>Edit</el-button>
+            <el-button type="primary" round @click="editRecipe()">Edit</el-button>
             <el-button type="danger" round @click="centerDialogVisible = true">Delete</el-button>
         </el-row>
     </div>
@@ -96,12 +96,16 @@ export default {
                     showError("Something went wrong :( Please contact administrator");
                 });
         };
+        const editRecipe = () => {
+            router.push(`/edit_recipe/${selectedRecipe.value._id}`);
+        };
         return {
             selectedRecipe,
             mockImg,
             centerDialogVisible,
             user,
             deleteRecipe,
+            editRecipe,
         };
     },
 };

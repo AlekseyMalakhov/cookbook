@@ -36,7 +36,7 @@
         <el-row justify="start" style="padding: 40px 20px 20px 20px">
             {{ selectedRecipe.recipeText }}
         </el-row>
-        <el-row type="flex" justify="end" style="margin-right: 30px; margin-top: 20px">
+        <el-row type="flex" justify="end" style="margin-right: 30px; margin-top: 20px" v-if="user && user._id === selectedRecipe.userID">
             <el-button type="primary" round>Edit</el-button>
             <el-button type="danger" round @click="centerDialogVisible = true">Delete</el-button>
         </el-row>
@@ -64,6 +64,7 @@ import { ref } from "vue";
 export default {
     setup() {
         const store = useStore();
+        const user = computed(() => store.state.User.user);
         const recipes = computed(() => store.state.User.recipes);
         const route = useRoute();
         const selectedRecipe = computed(() => {
@@ -74,6 +75,7 @@ export default {
             selectedRecipe,
             mockImg,
             centerDialogVisible,
+            user,
         };
     },
 };

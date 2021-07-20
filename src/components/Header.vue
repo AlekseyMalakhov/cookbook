@@ -8,22 +8,25 @@
             </el-row>
         </el-col>
         <el-col :span="12">
-            <el-row type="flex" align="middle" justify="end">
-                <el-dropdown trigger="click" v-if="user">
-                    <span class="el-dropdown-link username">{{ user.name }}</span>
+            <el-row type="flex" align="middle" justify="end" v-if="user">
+                <router-link to="/" class="chefLink">
+                    <span class="username">{{ user.name }}</span>
+                </router-link>
+
+                <el-dropdown trigger="click">
+                    <el-avatar :size="50" :src="state.circleUrl" class="avatar">
+                        <i class="el-icon-s-custom" />
+                    </el-avatar>
                     <template #dropdown>
                         <el-dropdown-menu>
-                            <el-dropdown-item>
-                                <!-- <router-link :to="`/${user._id}`" class="chefLink">
-                                    My recepies
-                                </router-link> -->
-                            </el-dropdown-item>
                             <el-dropdown-item @click="logout">Logout</el-dropdown-item>
                         </el-dropdown-menu>
                     </template>
                 </el-dropdown>
+            </el-row>
 
-                <router-link :to="link" class="avatarRoute">
+            <el-row type="flex" align="middle" justify="end" v-if="!user">
+                <router-link to="/login" class="avatarRoute">
                     <el-avatar :size="50" :src="state.circleUrl" class="avatar">
                         <i class="el-icon-s-custom" />
                     </el-avatar>
@@ -47,13 +50,6 @@ export default {
         const router = useRouter();
         const store = useStore();
         const user = computed(() => store.state.User.user);
-        const link = computed(() => {
-            if (user.value) {
-                return "";
-            } else {
-                return "/login";
-            }
-        });
 
         const logout = () => {
             localStorage.removeItem("user");
@@ -65,7 +61,6 @@ export default {
             state,
             user,
             logout,
-            link,
         };
     },
 };
@@ -90,14 +85,11 @@ export default {
 
 .avatar {
     font-size: 30px;
+    cursor: pointer;
 }
 
 .avatar:hover {
     background-color: #aaaeb5;
-}
-
-.el-dropdown-link {
-    cursor: pointer;
 }
 
 .chefLink {

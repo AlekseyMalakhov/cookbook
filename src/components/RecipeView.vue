@@ -4,7 +4,7 @@
             <h2>{{ selectedRecipe.recipeName }}</h2>
         </el-row>
         <el-row class="userAndDateContainer" type="flex" justify="start" direction="horizontal">
-            <el-col :push="8" :span="8" style="display: flex">
+            <el-col :span="8" style="display: flex; margin-left: 40px">
                 <div>
                     <el-avatar :size="50" :src="''" class="avatar">
                         <i class="el-icon-s-custom" />

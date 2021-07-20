@@ -56,8 +56,6 @@ export default {
         });
 
         onMounted(() => {
-            console.log(props.editedIngr);
-            console.log(props.editedIngr.name);
             if (props.editedIngr) {
                 state.name = props.editedIngr.name;
                 state.amount = props.editedIngr.amount;

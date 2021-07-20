@@ -19,7 +19,7 @@
 
     <el-menu v-if="selectedUser">
         <router-link v-for="recipe in recipes" :key="recipe._id" :to="`/recipe/${recipe._id}`" class="chefLink">
-            <el-menu-item>
+            <el-menu-item class="menuElement">
                 {{ recipe.recipeName }}
             </el-menu-item>
         </router-link>
@@ -67,11 +67,17 @@ export default {
 
 .selectedUser {
     padding-top: 20px;
+    padding-bottom: 20px;
     background-color: white;
     font-weight: bold;
 }
 
 .chefLink {
     text-decoration: none;
+}
+
+.menuElement {
+    line-height: normal;
+    white-space: normal;
 }
 </style>

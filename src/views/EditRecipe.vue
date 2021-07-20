@@ -52,7 +52,7 @@
                 </el-row>
 
                 <el-row type="flex" justify="space-around" align="middle" style="margin-bottom: 50px">
-                    <el-button type="primary" @click="submitForm()">Update</el-button>
+                    <el-button type="primary" @click="submitForm()">Save</el-button>
                     <el-button @click="cancel()">Cancel</el-button>
                 </el-row>
             </el-form>
@@ -66,7 +66,7 @@ import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { showError, showSuccess } from "../utilities";
 import AddIngredientField from "../components/AddIngredientField.vue";
-import { onUpdated } from "@vue/runtime-core";
+import { onMounted, onUpdated } from "@vue/runtime-core";
 
 const getID = (recipeIngredients) => {
     const idList = [];
@@ -107,13 +107,25 @@ export default {
             },
         });
 
-        onUpdated(() => {
+        const getCurrentCalues = () => {
+            state.recipe.recipeName = selectedRecipe.value.recipeName;
+            state.recipe.recipeText = selectedRecipe.value.recipeText;
+            state.recipe.recipeIngredients = selectedRecipe.value.recipeIngredients;
+        };
+
+        onMounted(() => {
+            //coming from hyperling
             console.log(selectedRecipe.value);
             if (selectedRecipe.value) {
-                state.recipe.recipeName = selectedRecipe.value.recipeName;
-                state.recipe.recipeText = selectedRecipe.value.recipeText;
-                state.recipe.recipeIngredients = selectedRecipe.value.recipeIngredients;
-                console.log(selectedRecipe.value.recipeIngredients);
+                getCurrentCalues();
+            }
+        });
+
+        onUpdated(() => {
+            //reload page
+            console.log(selectedRecipe.value);
+            if (selectedRecipe.value) {
+                getCurrentCalues();
             }
         });
 

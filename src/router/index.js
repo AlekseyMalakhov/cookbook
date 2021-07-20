@@ -10,11 +10,12 @@ import EditRecipe from "../views/EditRecipe.vue";
 const routes = [
     {
         path: "/",
+        redirect: "/list",
         name: "Home",
         component: Home,
         children: [
             {
-                path: "/",
+                path: "/list/:userID?",
                 component: CardList,
             },
             {

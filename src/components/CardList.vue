@@ -11,15 +11,19 @@
 import Card from "./Card.vue";
 import { useStore } from "vuex";
 import { computed } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 
 export default {
     name: "CardList",
     setup() {
         const store = useStore();
         const router = useRouter();
+        const route = useRoute();
         const user = computed(() => store.state.User.user);
-        const selectedUser = computed(() => store.state.User.selectedUser);
+        const users = computed(() => store.state.User.users);
+        const selectedUser = computed(() => {
+            return users.value.find((user) => user._id === route.params.userID);
+        });
         const createRecipe = () => {
             router.push("/create_recipe");
         };

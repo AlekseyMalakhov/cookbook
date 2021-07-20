@@ -12,9 +12,11 @@
     </el-row>
 
     <el-menu v-if="!selectedUser">
-        <el-menu-item v-for="user in users" :key="user._id" @click="selectUser(user)">
-            {{ user.name }}
-        </el-menu-item>
+        <router-link v-for="user in users" :key="user._id" :to="`/list/${user._id}`" class="chefLink">
+            <el-menu-item class="menuElement">
+                {{ user.name }}
+            </el-menu-item>
+        </router-link>
     </el-menu>
 
     <el-menu v-if="selectedUser">
@@ -29,28 +31,28 @@
 <script>
 import { useStore } from "vuex";
 import { computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
 export default {
     setup() {
         const store = useStore();
+        const route = useRoute();
+        const router = useRouter();
         const users = computed(() => store.state.User.users);
-        const selectedUser = computed(() => store.state.User.selectedUser);
+        const selectedUser = computed(() => {
+            return users.value.find((user) => user._id === route.params.userID);
+        });
         const recipes = computed(() => {
             const rs = store.state.User.recipes.filter((res) => res.userID === selectedUser.value._id);
             return rs;
         });
 
-        const selectUser = (user) => {
-            store.dispatch("User/setSelectedUser", user);
-        };
-
         const unselectUser = () => {
-            store.dispatch("User/setSelectedUser", null);
+            router.push("/");
         };
 
         return {
             users,
             recipes,
-            selectUser,
             selectedUser,
             unselectUser,
         };

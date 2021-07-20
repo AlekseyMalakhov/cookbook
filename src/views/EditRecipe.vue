@@ -1,60 +1,63 @@
 <template>
-    <el-row type="flex" justify="center" align="middle">
-        <h2>Edit recipe {{ selectedRecipe.recipeName }}</h2>
-    </el-row>
-    <el-row type="flex" justify="center" align="middle">
-        <el-form :model="state.recipe" :rules="state.rules" ref="recipeForm" label-width="120px" label-position="top">
-            <el-form-item label="Recipe name" prop="recipeName" class="labelRecipe1 labelRecipe2">
-                <el-input v-model="state.recipe.recipeName" class="recipeInput"></el-input>
-            </el-form-item>
-
-            <AddIngredientField
-                v-for="ing in state.recipe.recipeIngredients"
-                :key="ing.id"
-                :id="ing.id"
-                :units="units"
-                @change-ingredient="changeIng"
-                @delete-ingredient="deleteIng"
-            />
-
-            <el-row type="flex" justify="center" align="middle">
-                <el-tooltip effect="light" content="Add ingredient" placement="left">
-                    <el-button type="success" icon="el-icon-plus" circle @click="addIng()"></el-button>
-                </el-tooltip>
-            </el-row>
-
-            <el-form-item label="Text:">
-                <el-input type="textarea" :autosize="{ minRows: 4 }" placeholder="Please input" v-model="state.recipe.recipeText"> </el-input>
-            </el-form-item>
-
-            <el-row type="flex" justify="center" align="middle" style="margin-bottom: 20px">
-                <div class="imageLable">Image:</div>
-                <el-form-item>
-                    <el-upload
-                        class="imgUpload1 imgUpload2"
-                        drag
-                        action="http://localhost:3000/upload_img"
-                        :on-change="handleImgUpload"
-                        multiple
-                        :auto-upload="false"
-                    >
-                        <i class="el-icon-upload"></i>
-                        <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
-                        <template #tip>
-                            <div class="el-upload__tip">
-                                jpg/png files with a size less than 500kb
-                            </div>
-                        </template>
-                    </el-upload>
+    <div v-if="selectedRecipe">
+        <el-row type="flex" justify="center" align="middle">
+            <h2>Edit recipe {{ selectedRecipe.recipeName }}</h2>
+        </el-row>
+        <el-row type="flex" justify="center" align="middle">
+            <el-form :model="state.recipe" :rules="state.rules" ref="recipeForm" label-width="120px" label-position="top">
+                <el-form-item label="Recipe name" prop="recipeName" class="labelRecipe1 labelRecipe2">
+                    <el-input v-model="state.recipe.recipeName" class="recipeInput"></el-input>
                 </el-form-item>
-            </el-row>
 
-            <el-row type="flex" justify="space-around" align="middle" style="margin-bottom: 50px">
-                <el-button type="primary" @click="submitForm()">Create</el-button>
-                <el-button @click="cancel()">Cancel</el-button>
-            </el-row>
-        </el-form>
-    </el-row>
+                <AddIngredientField
+                    v-for="ing in state.recipe.recipeIngredients"
+                    :key="ing.id"
+                    :id="ing.id"
+                    :units="units"
+                    :editedIngr="ing"
+                    @change-ingredient="changeIng"
+                    @delete-ingredient="deleteIng"
+                />
+
+                <el-row type="flex" justify="center" align="middle">
+                    <el-tooltip effect="light" content="Add ingredient" placement="left">
+                        <el-button type="success" icon="el-icon-plus" circle @click="addIng()"></el-button>
+                    </el-tooltip>
+                </el-row>
+
+                <el-form-item label="Text:">
+                    <el-input type="textarea" :autosize="{ minRows: 4 }" placeholder="Please input" v-model="state.recipe.recipeText"> </el-input>
+                </el-form-item>
+
+                <el-row type="flex" justify="center" align="middle" style="margin-bottom: 20px">
+                    <div class="imageLable">Image:</div>
+                    <el-form-item>
+                        <el-upload
+                            class="imgUpload1 imgUpload2"
+                            drag
+                            action="http://localhost:3000/upload_img"
+                            :on-change="handleImgUpload"
+                            multiple
+                            :auto-upload="false"
+                        >
+                            <i class="el-icon-upload"></i>
+                            <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
+                            <template #tip>
+                                <div class="el-upload__tip">
+                                    jpg/png files with a size less than 500kb
+                                </div>
+                            </template>
+                        </el-upload>
+                    </el-form-item>
+                </el-row>
+
+                <el-row type="flex" justify="space-around" align="middle" style="margin-bottom: 50px">
+                    <el-button type="primary" @click="submitForm()">Update</el-button>
+                    <el-button @click="cancel()">Cancel</el-button>
+                </el-row>
+            </el-form>
+        </el-row>
+    </div>
 </template>
 
 <script>
@@ -63,8 +66,22 @@ import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { showError, showSuccess } from "../utilities";
 import AddIngredientField from "../components/AddIngredientField.vue";
+import { onUpdated } from "@vue/runtime-core";
 
-let ingID = 2;
+const getID = (recipeIngredients) => {
+    const idList = [];
+    for (let i = 0; i < recipeIngredients.length; i++) {
+        idList.push(recipeIngredients[i].id);
+    }
+    let largestNumber;
+    if (idList.length !== 0) {
+        largestNumber = Math.max(...idList);
+    } else {
+        largestNumber = 0;
+    }
+    const id = largestNumber + 1;
+    return id;
+};
 
 export default {
     components: { AddIngredientField },
@@ -81,20 +98,23 @@ export default {
         const state = reactive({
             recipe: {
                 recipeName: "",
-                recipeIngredients: [
-                    {
-                        id: 1,
-                        name: "",
-                        amount: "",
-                        unit: "",
-                    },
-                ],
+                recipeIngredients: [],
                 recipeText: "",
                 img: "",
             },
             rules: {
                 recipeName: [{ required: true, message: "Please, enter username", trigger: "change" }],
             },
+        });
+
+        onUpdated(() => {
+            console.log(selectedRecipe.value);
+            if (selectedRecipe.value) {
+                state.recipe.recipeName = selectedRecipe.value.recipeName;
+                state.recipe.recipeText = selectedRecipe.value.recipeText;
+                state.recipe.recipeIngredients = selectedRecipe.value.recipeIngredients;
+                console.log(selectedRecipe.value.recipeIngredients);
+            }
         });
 
         const recipeForm = ref(null);
@@ -112,23 +132,22 @@ export default {
                 text: JSONObj,
                 img: state.recipe.img,
             };
-            console.log(recipe);
             const formData = new FormData();
             for (let x in recipe) {
                 formData.append(x, recipe[x]);
             }
 
-            fetch("http://localhost:3000/create_recipe", {
-                method: "POST",
+            fetch(`http://localhost:3000/edit_recipe/${selectedRecipe.value._id}`, {
+                method: "PUT",
                 body: formData,
             })
                 .then((response) => {
                     if (response.status === 200) {
-                        showSuccess("Recipe successfully created");
+                        showSuccess("Recipe successfully updated");
                         store.dispatch("User/getAllRecipes");
                         router.push("/");
                     } else {
-                        showError("Error! Recipe has not been created!");
+                        showError("Error! Recipe has not been updated!");
                     }
                 })
                 .catch((error) => {
@@ -144,13 +163,12 @@ export default {
 
         const addIng = () => {
             const ing = {
-                id: ingID,
+                id: getID(state.recipe.recipeIngredients),
                 name: "",
                 amount: "",
                 unit: "",
             };
             state.recipe.recipeIngredients.push(ing);
-            ingID++;
         };
 
         const deleteIng = (id) => {

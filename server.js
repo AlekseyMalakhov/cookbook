@@ -149,11 +149,26 @@ app.delete("/delete_recipe/:id", (req, res) => {
     deleteRecipe();
 });
 
-//upload image
-app.post("/upload_img", upload.single("recipe"), (req, res) => {
-    const img = req.file;
-    console.log(img);
+//edit recipe
+app.put("/edit_recipe/:id", upload.single("img"), (req, res) => {
+    const updatedRecipe = JSON.parse(req.body.text);
+    const id = req.params.id;
+    const query = {
+        _id: new ObjectId(id),
+    };
+
+    async function editRecipe() {
+        const result = await collectionRecipes.replaceOne(query, updatedRecipe);
+        res.send(result);
+    }
+    editRecipe();
 });
+
+// //upload image
+// app.post("/upload_img", upload.single("recipe"), (req, res) => {
+//     const img = req.file;
+//     console.log(img);
+// });
 
 //start the server
 app.listen(port, () => {

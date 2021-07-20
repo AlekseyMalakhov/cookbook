@@ -18,7 +18,7 @@
 
 <script>
 import { reactive } from "@vue/reactivity";
-import { computed } from "@vue/runtime-core";
+import { computed, onMounted } from "@vue/runtime-core";
 const allowOnlyNumbers = (text) => {
     const regex1 = /[^\d]/g;
     const onlyNumbers = text.replace(regex1, "");
@@ -36,6 +36,10 @@ export default {
             type: Number,
             required: true,
         },
+        editedIngr: {
+            type: Object,
+            required: false,
+        },
     },
     setup(props, ctx) {
         const state = reactive({
@@ -49,6 +53,16 @@ export default {
                 return "Ingredients:";
             }
             return "";
+        });
+
+        onMounted(() => {
+            console.log(props.editedIngr);
+            console.log(props.editedIngr.name);
+            if (props.editedIngr) {
+                state.name = props.editedIngr.name;
+                state.amount = props.editedIngr.amount;
+                state.unit = props.editedIngr.unit;
+            }
         });
 
         const sendData = (text, amount) => {

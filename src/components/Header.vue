@@ -9,7 +9,7 @@
         </el-col>
         <el-col :span="12">
             <el-row type="flex" align="middle" justify="end" v-if="user">
-                <router-link to="/" class="chefLink">
+                <router-link :to="`/list/${user._id}`" class="chefLink">
                     <span class="username">{{ user.name }}</span>
                 </router-link>
 

@@ -13,7 +13,7 @@
 
     <el-menu v-if="!selectedUser">
         <router-link v-for="user in users" :key="user._id" :to="`/list/${user._id}`" class="chefLink">
-            <el-menu-item class="menuElement">
+            <el-menu-item>
                 {{ user.name }}
             </el-menu-item>
         </router-link>

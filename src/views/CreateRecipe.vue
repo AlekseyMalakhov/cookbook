@@ -85,18 +85,17 @@ export default {
                     },
                 ],
                 recipeText: "",
-                img: "",
             },
             rules: {
                 recipeName: [{ required: true, message: "Please, enter username", trigger: "change" }],
             },
         });
 
+        const img = ref("");
         const recipeForm = ref(null);
 
         const send = (recipeObj) => {
             const obj = { ...recipeObj };
-            delete obj.img;
             obj.userID = user.value._id;
             const date = new Date(Date.now());
             const dateString = date.toLocaleDateString("en-GB");
@@ -105,7 +104,7 @@ export default {
             const JSONObj = JSON.stringify(obj);
             const recipe = {
                 text: JSONObj,
-                img: state.recipe.img,
+                img: img.value,
             };
             console.log(recipe);
             const formData = new FormData();
@@ -121,7 +120,7 @@ export default {
                     if (response.status === 200) {
                         showSuccess("Recipe successfully created");
                         store.dispatch("User/getAllRecipes");
-                        router.push("/");
+                        router.push(`/list/${user.value._id}`);
                     } else {
                         showError("Error! Recipe has not been created!");
                     }
@@ -166,7 +165,7 @@ export default {
         }
 
         const handleImgUpload = (file) => {
-            state.recipe.img = file.raw;
+            img.value = file.raw;
         };
 
         return {

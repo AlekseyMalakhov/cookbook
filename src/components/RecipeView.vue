@@ -30,7 +30,7 @@
                 </el-row>
             </el-col>
             <el-col :span="12" class="imageContainer">
-                <img :src="mockImg" class="image" />
+                <img :src="`http://localhost:3000/images/${selectedRecipe.img}`" class="image" />
             </el-col>
         </el-row>
         <el-row justify="start" style="padding: 40px 20px 20px 20px">
@@ -84,11 +84,11 @@ export default {
                         showSuccess("Recipe has been successfully deleted.");
                         centerDialogVisible.value = false;
                         store.dispatch("User/getAllRecipes");
-                        router.push("/");
+                        router.push(`/list/${selectedRecipe.value.userID}`);
                     } else {
                         showError("Something went wrong :( Please contact administrator");
                         centerDialogVisible.value = false;
-                        router.push("/");
+                        router.push(`/list/${selectedRecipe.value.userID}`);
                     }
                 })
                 .catch((error) => {

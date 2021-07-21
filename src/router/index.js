@@ -19,7 +19,7 @@ const routes = [
                 component: CardList,
             },
             {
-                path: "/recipe/:recipe_id",
+                path: "/:userID/recipe/:recipe_id",
                 component: RecipeView,
             },
         ],

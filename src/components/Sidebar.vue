@@ -20,7 +20,7 @@
     </el-menu>
 
     <el-menu v-if="selectedUser">
-        <router-link v-for="recipe in recipes" :key="recipe._id" :to="`/recipe/${recipe._id}`" class="chefLink">
+        <router-link v-for="recipe in recipes" :key="recipe._id" :to="`/${recipe.userID}/recipe/${recipe._id}`" class="chefLink">
             <el-menu-item class="menuElement">
                 {{ recipe.recipeName }}
             </el-menu-item>

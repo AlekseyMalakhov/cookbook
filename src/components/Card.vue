@@ -1,12 +1,12 @@
 <template>
     <el-card :body-style="{ padding: '0px' }">
-        <img :src="mockImg" class="image" />
+        <img :src="`http://localhost:3000/images/${recipe.img}`" class="image" />
         <div style="padding: 14px;" class="info">
             <div class="user">{{ recipe.user }}</div>
             <span>{{ recipe.recipeName }}</span>
             <div class="bottom">
                 <time class="time">{{ recipe.date }}</time>
-                <router-link :to="`/recipe/${recipe._id}`" style="text-decoration: none;">
+                <router-link :to="`/${recipe.userID}/recipe/${recipe._id}`" style="text-decoration: none;">
                     <el-button type="text" class="button">Try it</el-button>
                 </router-link>
             </div>

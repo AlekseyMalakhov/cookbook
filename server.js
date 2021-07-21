@@ -7,6 +7,8 @@ const cors = require("cors");
 app.use(cors());
 app.use(express.json());
 
+app.use("/images", express.static("uploads"));
+
 //DB account info
 //login - megauser
 //pass - 123456789qqq
@@ -122,8 +124,7 @@ app.get("/recipes", (req, res) => {
 //create recipe
 app.post("/create_recipe", upload.single("img"), (req, res) => {
     const newRecipe = JSON.parse(req.body.text);
-    const img = req.file;
-    console.log(img);
+    newRecipe.img = req.file.filename;
 
     async function createRecipe() {
         const result = await collectionRecipes.insertOne(newRecipe);

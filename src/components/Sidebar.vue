@@ -7,9 +7,9 @@
         <el-button type="primary" icon="el-icon-back" circle @click="unselectUser()"></el-button>
     </el-row>
 
-    <el-row v-if="selectedUser" type="flex" justify="center" class="selectedUser">
+    <!-- <el-row v-if="selectedUser" type="flex" justify="center" class="selectedUser">
         {{ selectedUser.name }}
-    </el-row>
+    </el-row> -->
 
     <el-menu v-if="!selectedUser">
         <router-link v-for="user in users" :key="user._id" :to="`/list/${user._id}`" class="chefLink">
@@ -81,9 +81,11 @@ export default {
     text-decoration: none;
 }
 
-.menuElement {
+li.menuElement {
     line-height: normal;
     white-space: normal;
+    margin: 20px auto;
+    height: auto;
 }
 
 .avatar1.avatar2 i {

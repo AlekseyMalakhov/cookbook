@@ -3,35 +3,37 @@
         <el-row type="flex" justify="center">
             <h2>{{ selectedRecipe.recipeName }}</h2>
         </el-row>
-        <el-row class="userAndDateContainer" type="flex" justify="start" direction="horizontal">
-            <el-col :span="8" style="display: flex; margin-left: 40px">
-                <div>
-                    <el-avatar :size="50" :src="''" class="avatar">
-                        <i class="el-icon-s-custom" />
-                    </el-avatar>
-                </div>
-                <div style="margin-left: 10px; min-width: 300 mm">
-                    <div class="userAndDate">{{ selectedRecipe.user }}</div>
-                    <div class="userAndDate">{{ selectedRecipe.date }}</div>
-                </div>
-            </el-col>
-            <el-col :span="8"></el-col>
-        </el-row>
-
-        <el-row type="flex" justify="center">
-            <el-col :span="12" style="padding-left: 20px">
-                <h4 style="padding-left: 30px">Ingredients:</h4>
-                <el-row>
-                    <ul v-if="selectedRecipe">
-                        <li v-for="ingredient in selectedRecipe.recipeIngredients" :key="ingredient.id" style="margin-top: 10px">
-                            {{ `${ingredient.name} - ${ingredient.amount} ${ingredient.unit};` }}
-                        </li>
-                    </ul>
+        <el-row type="flex" justify="space-between">
+            <el-row type="flex" justify="start" style="flex-direction: column">
+                <el-row style="margin-left: 40px" type="flex" justify="start">
+                    <div>
+                        <el-avatar :size="50" :src="''" class="avatar">
+                            <i class="el-icon-s-custom" />
+                        </el-avatar>
+                    </div>
+                    <div style="margin-left: 10px; min-width: 300 mm">
+                        <div class="userAndDate">{{ selectedRecipe.user }}</div>
+                        <div class="userAndDate">{{ selectedRecipe.date }}</div>
+                    </div>
                 </el-row>
-            </el-col>
-            <el-col :span="12" class="imageContainer">
-                <img :src="`http://localhost:3000/images/${selectedRecipe.img}`" class="image" />
-            </el-col>
+                <el-row type="flex" justify="start">
+                    <el-col style="padding-left: 20px">
+                        <h4 style="padding-left: 30px; margin-top: 30px; margin-bottom: 5px">Ingredients:</h4>
+                        <el-row>
+                            <ul v-if="selectedRecipe" style="margin: 0 auto">
+                                <li v-for="ingredient in selectedRecipe.recipeIngredients" :key="ingredient.id" style="margin-top: 10px">
+                                    {{ `${ingredient.name} - ${ingredient.amount} ${ingredient.unit};` }}
+                                </li>
+                            </ul>
+                        </el-row>
+                    </el-col>
+                </el-row>
+            </el-row>
+            <el-row type="flex" justify="center">
+                <el-col :span="12" class="imageContainer">
+                    <img :src="`http://localhost:3000/images/${selectedRecipe.img}`" class="image" />
+                </el-col>
+            </el-row>
         </el-row>
         <el-row justify="start" style="padding: 40px 20px 20px 20px">
             {{ selectedRecipe.recipeText }}
@@ -124,9 +126,6 @@ export default {
 }
 .image {
     max-width: 300px;
-}
-.userAndDateContainer {
-    margin-bottom: 20px;
 }
 .avatar {
     font-size: 30px;

@@ -1,4 +1,7 @@
 <template>
+    <el-row type="flex" justify="center" v-if="selectedUser">
+        <h3 style="margin: 3px auto">{{ selectedUser.name }}</h3>
+    </el-row>
     <el-row type="flex">
         <Card class="card2" v-for="recipe in recipes" :key="recipe.id" :recipe="recipe" />
     </el-row>
@@ -40,6 +43,7 @@ export default {
             recipes,
             createRecipe,
             user,
+            selectedUser,
         };
     },
     components: { Card },

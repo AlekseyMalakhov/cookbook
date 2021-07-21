@@ -14,7 +14,10 @@
     <el-menu v-if="!selectedUser">
         <router-link v-for="user in users" :key="user._id" :to="`/list/${user._id}`" class="chefLink">
             <el-menu-item>
-                {{ user.name }}
+                <el-avatar :size="40" :src="''" class="avatar1 avatar2">
+                    <i class="el-icon-s-custom" />
+                </el-avatar>
+                <span style="margin-left: 10px">{{ user.name }}</span>
             </el-menu-item>
         </router-link>
     </el-menu>
@@ -81,5 +84,17 @@ export default {
 .menuElement {
     line-height: normal;
     white-space: normal;
+}
+
+.avatar1.avatar2 i {
+    font-size: 20px;
+    vertical-align: baseline;
+    margin-right: 0;
+    width: 30px;
+    cursor: pointer;
+}
+
+span.avatar1.avatar2 {
+    font-size: 20px;
 }
 </style>

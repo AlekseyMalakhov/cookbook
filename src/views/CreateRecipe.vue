@@ -189,11 +189,11 @@ export default {
     flex-direction: column;
 }
 
-.labelRecipe1.labelRecipe2 .el-form-item__content {
+.labelRecipe1.labelRecipe2::v-deep .el-form-item__content {
     display: flex;
 }
 
-.labelRecipe1.labelRecipe2 label {
+.labelRecipe1.labelRecipe2::v-deep label {
     padding-bottom: 0;
 }
 
@@ -218,7 +218,7 @@ export default {
     margin-bottom: 40px;
 }
 
-.imgUpload1.imgUpload2 .el-upload__tip {
+.imgUpload1.imgUpload2::v-deep .el-upload__tip {
     line-height: 10px;
     margin-top: 0;
 }

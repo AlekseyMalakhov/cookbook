@@ -14,7 +14,7 @@
                 </router-link>
 
                 <el-dropdown trigger="click">
-                    <el-avatar :size="50" :src="state.circleUrl" class="avatar">
+                    <el-avatar :size="50" :src="`http://localhost:3000/images/avatars/${user.img}`" fit="fill" class="avatar">
                         <i class="el-icon-s-custom" />
                     </el-avatar>
                     <template #dropdown>
@@ -27,7 +27,7 @@
 
             <el-row type="flex" align="middle" justify="end" v-if="!user">
                 <router-link to="/login" class="avatarRoute">
-                    <el-avatar :size="50" :src="state.circleUrl" class="avatar">
+                    <el-avatar :size="50" :src="''" class="avatar">
                         <i class="el-icon-s-custom" />
                     </el-avatar>
                 </router-link>
@@ -37,16 +37,13 @@
 </template>
 
 <script>
-import { reactive, computed } from "vue";
+import { computed } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 
 export default {
     name: "Header",
     setup() {
-        const state = reactive({
-            circleUrl: "",
-        });
         const router = useRouter();
         const store = useStore();
         const user = computed(() => store.state.User.user);
@@ -58,7 +55,6 @@ export default {
         };
 
         return {
-            state,
             user,
             logout,
         };

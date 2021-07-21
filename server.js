@@ -1,6 +1,7 @@
 const express = require("express");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
+const uploadAvatar = multer({ dest: "uploads/avatars/" });
 const app = express();
 const port = 3000;
 const cors = require("cors");
@@ -37,8 +38,9 @@ async function run() {
 run().catch(console.dir);
 
 //create account
-app.post("/create_account", (req, res) => {
-    const newAccount = req.body;
+app.post("/create_account", uploadAvatar.single("img"), (req, res) => {
+    const newAccount = JSON.parse(req.body.text);
+    newAccount.img = req.file.filename;
 
     //check if username is free
     async function checkForExisting() {

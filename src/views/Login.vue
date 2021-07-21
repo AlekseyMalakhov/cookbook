@@ -99,7 +99,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .labelLogin1.labelLogin2 label {
     padding-bottom: 0;
 }

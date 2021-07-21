@@ -59,7 +59,6 @@
 
 <script>
 import { computed } from "@vue/runtime-core";
-import mockImg from "../mockImg";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import { useRouter } from "vue-router";
@@ -103,7 +102,6 @@ export default {
         };
         return {
             selectedRecipe,
-            mockImg,
             centerDialogVisible,
             user,
             deleteRecipe,

@@ -10,7 +10,7 @@
     <el-menu v-if="!selectedUser">
         <router-link v-for="user in users" :key="user._id" :to="`/list/${user._id}`" class="chefLink">
             <el-menu-item>
-                <el-avatar :size="40" :src="''" class="avatar1 avatar2">
+                <el-avatar :size="40" :src="`http://localhost:3000/images/avatars/${user.img}`" class="avatar1 avatar2">
                     <i class="el-icon-s-custom" />
                 </el-avatar>
                 <span style="margin-left: 10px">{{ user.name }}</span>

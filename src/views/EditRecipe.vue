@@ -220,7 +220,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .labelRecipe1.labelRecipe2 {
     display: flex;
     flex-direction: column;

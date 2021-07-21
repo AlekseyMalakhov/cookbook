@@ -14,6 +14,28 @@
                 <el-input v-model="state.login.password2" class="loginInput" @keyup.enter="() => submitForm()"></el-input>
             </el-form-item>
 
+            <el-row type="flex" justify="center" style="margin-bottom: 20px; flex-direction: column">
+                <div class="imageLable">Image:</div>
+                <el-form-item>
+                    <el-upload
+                        class="imgUpload1 imgUpload2"
+                        drag
+                        action="http://localhost:3000/upload_img"
+                        :on-change="handleImgUpload"
+                        multiple
+                        :auto-upload="false"
+                    >
+                        <i class="el-icon-upload"></i>
+                        <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
+                        <template #tip>
+                            <div class="el-upload__tip">
+                                jpg/png files with a size less than 500kb
+                            </div>
+                        </template>
+                    </el-upload>
+                </el-form-item>
+            </el-row>
+
             <el-row type="flex" justify="space-around" align="middle">
                 <el-button type="primary" @click="submitForm()">Create</el-button>
                 <el-button @click="cancel()">Cancel</el-button>
@@ -45,14 +67,27 @@ export default {
         });
 
         const loginForm = ref(null);
+        const img = ref("");
+
+        const handleImgUpload = (file) => {
+            img.value = file.raw;
+        };
 
         const send = (account) => {
+            const JSONObj = JSON.stringify(account);
+            const newAccount = {
+                text: JSONObj,
+                img: img.value,
+            };
+            console.log(newAccount);
+            const formData = new FormData();
+            for (let x in newAccount) {
+                formData.append(x, newAccount[x]);
+            }
+
             fetch("http://localhost:3000/create_account", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(account),
+                body: formData,
             })
                 .then((response) => {
                     if (response.status === 200) {
@@ -78,7 +113,6 @@ export default {
                         delete account.password1;
                         delete account.password2;
                         send(account);
-                        console.log(account);
                     }
                 }
             });
@@ -94,11 +128,22 @@ export default {
             submitForm,
             loginForm,
             cancel,
+            handleImgUpload,
         };
     },
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.imageLable {
+    font-size: 14px;
+    color: #606266;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+.imgUpload1.imgUpload2 .el-upload__tip {
+    line-height: 10px;
+    margin-top: 0;
+}
 //classes look at the Login component
 </style>

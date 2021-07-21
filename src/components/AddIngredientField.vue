@@ -1,6 +1,6 @@
 <template>
     <el-form-item :label="label" prop="recipeForm" class="labelRecipe1 labelRecipe2">
-        <el-input v-model="state.name" @input="sendData($event)" class="recipeInput" placeholder="Ingredient"></el-input>
+        <el-input v-model="state.name" @input="sendData($event)" placeholder="Ingredient"></el-input>
         <el-input v-model="state.amount" @input="sendData($event, true)" class="amount" inputMode="numeric" placeholder="Amount"></el-input>
         <el-select v-model="state.unit" @change="sendData($event)" placeholder="Unit" class="unit">
             <el-option v-for="unit in props.units" :key="unit" :label="unit" :value="unit"></el-option>

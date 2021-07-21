@@ -5,7 +5,7 @@
     <el-row type="flex" justify="center" align="middle">
         <el-form :model="state.recipe" :rules="state.rules" ref="recipeForm" label-width="120px" label-position="top">
             <el-form-item label="Recipe name" prop="recipeName" class="labelRecipe1 labelRecipe2">
-                <el-input v-model="state.recipe.recipeName" class="recipeInput"></el-input>
+                <el-input v-model="state.recipe.recipeName"></el-input>
             </el-form-item>
 
             <AddIngredientField

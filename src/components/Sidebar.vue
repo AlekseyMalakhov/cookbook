@@ -7,10 +7,6 @@
         <el-button type="primary" icon="el-icon-back" circle @click="unselectUser()"></el-button>
     </el-row>
 
-    <!-- <el-row v-if="selectedUser" type="flex" justify="center" class="selectedUser">
-        {{ selectedUser.name }}
-    </el-row> -->
-
     <el-menu v-if="!selectedUser">
         <router-link v-for="user in users" :key="user._id" :to="`/list/${user._id}`" class="chefLink">
             <el-menu-item>
@@ -25,7 +21,8 @@
     <el-menu v-if="selectedUser">
         <router-link v-for="recipe in recipes" :key="recipe._id" :to="`/${recipe.userID}/recipe/${recipe._id}`" class="chefLink">
             <el-menu-item class="menuElement">
-                {{ recipe.recipeName }}
+                <el-avatar :size="40" :src="`http://localhost:3000/images/${recipe.img}`" class="avatar1 avatar2"></el-avatar>
+                <span style="margin-left: 10px">{{ recipe.recipeName }}</span>
             </el-menu-item>
         </router-link>
     </el-menu>

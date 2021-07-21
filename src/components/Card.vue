@@ -1,5 +1,5 @@
 <template>
-    <el-card :body-style="{ padding: '0px' }">
+    <el-card :body-style="{ padding: '0px' }" @click="showRecipe()">
         <img :src="`http://localhost:3000/images/${recipe.img}`" class="image" />
         <div style="padding: 14px;" class="info">
             <div class="user">{{ recipe.user }}</div>
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import mockImg from "../mockImg";
+import { useRouter } from "vue-router";
 export default {
     props: {
         recipe: {
@@ -23,9 +23,13 @@ export default {
             required: true,
         },
     },
-    setup() {
+    setup(props) {
+        const router = useRouter();
+        const showRecipe = () => {
+            router.push(`/${props.recipe.userID}/recipe/${props.recipe._id}`);
+        };
         return {
-            mockImg,
+            showRecipe,
         };
     },
 };
@@ -34,6 +38,7 @@ export default {
 <style lang="scss" scoped>
 .el-card {
     width: 230px;
+    cursor: pointer;
 }
 
 .user {

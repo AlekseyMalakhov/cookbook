@@ -155,6 +155,7 @@ app.delete("/delete_recipe/:id", (req, res) => {
 //edit recipe
 app.put("/edit_recipe/:id", upload.single("img"), (req, res) => {
     const updatedRecipe = JSON.parse(req.body.text);
+    updatedRecipe.img = req.file.filename;
     const id = req.params.id;
     const query = {
         _id: new ObjectId(id),

@@ -30,9 +30,14 @@
                 </el-form-item>
 
                 <div class="imageLable">Image:</div>
-                <el-row type="flex" justify="center" align="middle" style="margin-bottom: 20px">
+                <el-row type="flex" justify="center" align="middle" style="margin-bottom: 30px; flex-direction: row" v-if="img">
+                    <el-image style="height: 100px" :src="imgURL" fit="contain" class="preview"></el-image>
+                    <el-button type="danger" icon="el-icon-delete" circle style="margin-left: 20px" @click="deleteImg()"></el-button>
+                </el-row>
+
+                <el-row type="flex" justify="center" align="middle" style="margin-bottom: 20px" v-if="!img">
                     <el-form-item style="width: 100%">
-                        <el-upload class="imgUpload1 imgUpload2" drag action="" :on-change="handleImgUpload" multiple :auto-upload="false">
+                        <el-upload class="imgUpload1 imgUpload2" drag action="" :on-change="handleImgUpload" :auto-upload="false">
                             <i class="el-icon-upload"></i>
                             <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
                             <template #tip>
@@ -88,6 +93,7 @@ export default {
         });
 
         const img = ref("");
+        const imgURL = ref("");
         const recipeForm = ref(null);
 
         const send = (recipeObj) => {
@@ -115,6 +121,7 @@ export default {
                 .then((response) => {
                     if (response.status === 200) {
                         showSuccess("Recipe successfully created");
+                        URL.revokeObjectURL(imgURL.value);
                         store.dispatch("User/getAllRecipes");
                         router.push(`/list/${user.value._id}`);
                     } else {
@@ -162,6 +169,13 @@ export default {
 
         const handleImgUpload = (file) => {
             img.value = file.raw;
+            imgURL.value = URL.createObjectURL(file.raw);
+        };
+
+        const deleteImg = () => {
+            img.value = "";
+            URL.revokeObjectURL(imgURL.value);
+            imgURL.value = "";
         };
 
         return {
@@ -174,6 +188,9 @@ export default {
             addIng,
             deleteIng,
             handleImgUpload,
+            img,
+            imgURL,
+            deleteImg,
         };
     },
 };
@@ -213,6 +230,10 @@ export default {
 }
 
 .imgUpload1.imgUpload2::v-deep .el-upload-dragger {
+    width: auto;
+}
+
+.preview::v-deep img {
     width: auto;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <el-form-item :label="'#' + (props.i + 1)" prop="recipeForm" class="labelIng1 labelIng2">
-        <el-row type="flex" gutter="20">
+        <el-row type="flex" :gutter="20">
             <el-col :xs="24" :sm="14" style="margin-top: 15px">
                 <el-input v-model="state.name" @input="sendData($event)" placeholder="Ingredient"></el-input>
             </el-col>

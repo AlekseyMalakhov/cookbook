@@ -31,7 +31,12 @@
                 </el-form-item>
 
                 <div class="imageLable">Image:</div>
-                <el-row type="flex" justify="center" align="middle" style="margin-bottom: 20px">
+                <el-row type="flex" justify="center" align="middle" style="margin-bottom: 30px; flex-direction: row" v-if="imgURL">
+                    <el-image style="height: 100px" :src="imgURL" fit="contain" class="preview"></el-image>
+                    <el-button type="danger" icon="el-icon-delete" circle style="margin-left: 20px" @click="deleteImg()"></el-button>
+                </el-row>
+
+                <el-row type="flex" justify="center" align="middle" style="margin-bottom: 20px" v-if="!imgURL">
                     <el-form-item style="width: 100%">
                         <el-upload class="imgUpload1 imgUpload2" drag action="" :on-change="handleImgUpload" multiple :auto-upload="false">
                             <i class="el-icon-upload"></i>
@@ -101,28 +106,30 @@ export default {
             },
         });
 
-        const getCurrentCalues = () => {
+        const imgURL = ref("");
+        const getCurrentValues = () => {
             state.recipe.recipeName = selectedRecipe.value.recipeName;
             state.recipe.recipeText = selectedRecipe.value.recipeText;
             state.recipe.recipeIngredients = selectedRecipe.value.recipeIngredients;
+            state.recipe.img = selectedRecipe.value.img;
+            imgURL.value = `http://localhost:3000/images/${selectedRecipe.value.img}`;
         };
 
         onMounted(() => {
             //coming from hyperling
-            console.log(selectedRecipe.value);
             if (selectedRecipe.value) {
-                getCurrentCalues();
+                getCurrentValues();
             }
         });
 
         onUpdated(() => {
             //reload page
-            console.log(selectedRecipe.value);
             if (selectedRecipe.value) {
-                getCurrentCalues();
+                getCurrentValues();
             }
         });
 
+        const img = ref("");
         const recipeForm = ref(null);
 
         const send = (recipeObj) => {
@@ -136,7 +143,7 @@ export default {
             const JSONObj = JSON.stringify(obj);
             const recipe = {
                 text: JSONObj,
-                img: state.recipe.img,
+                img: state.recipe.img ? state.recipe.img : img.value,
             };
             const formData = new FormData();
             for (let x in recipe) {
@@ -150,8 +157,9 @@ export default {
                 .then((response) => {
                     if (response.status === 200) {
                         showSuccess("Recipe successfully updated");
+                        URL.revokeObjectURL(imgURL.value);
                         store.dispatch("User/getAllRecipes");
-                        router.push("/");
+                        router.push(`/list/${user.value._id}`);
                     } else {
                         showError("Error! Recipe has not been updated!");
                     }
@@ -195,7 +203,15 @@ export default {
         }
 
         const handleImgUpload = (file) => {
-            state.recipe.img = file.raw;
+            img.value = file.raw;
+            imgURL.value = URL.createObjectURL(file.raw);
+        };
+
+        const deleteImg = () => {
+            img.value = "";
+            state.recipe.img = "";
+            URL.revokeObjectURL(imgURL.value);
+            imgURL.value = "";
         };
 
         return {
@@ -209,6 +225,8 @@ export default {
             deleteIng,
             handleImgUpload,
             selectedRecipe,
+            deleteImg,
+            imgURL,
         };
     },
 };
@@ -218,7 +236,6 @@ export default {
 .labelRecipe1.labelRecipe2 {
     display: flex;
     flex-direction: column;
-    margin-bottom: 30px;
 }
 
 .labelRecipe1.labelRecipe2::v-deep .el-form-item__content {
@@ -249,6 +266,10 @@ export default {
 }
 
 .imgUpload1.imgUpload2::v-deep .el-upload-dragger {
+    width: auto;
+}
+
+.preview::v-deep img {
     width: auto;
 }
 </style>

@@ -30,6 +30,27 @@ export default {
                 const data = JSON.parse(existingUser);
                 store.dispatch("User/setUser", data);
             }
+
+            const getScreenWidth = () => {
+                let width;
+                if (window.screen.width < window.innerWidth) {
+                    // for moble browsers
+                    width = window.screen.width;
+                } else {
+                    width = window.innerWidth;
+                }
+                return width;
+            };
+            store.dispatch("User/setScreenWidth", getScreenWidth());
+            window.onresize = () => {
+                const width = getScreenWidth();
+                if (width < 650) {
+                    store.dispatch("User/setShowSidebar", false);
+                } else {
+                    store.dispatch("User/setShowSidebar", true);
+                }
+                store.dispatch("User/setScreenWidth", getScreenWidth());
+            };
         });
     },
 };

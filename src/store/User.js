@@ -6,6 +6,8 @@ export const UserModule = {
         selectedUser: null,
         users: [],
         recipes: [],
+        screenWidth: 0,
+        showSidebar: true,
     },
 
     //Mutations are functions that effect the State
@@ -21,6 +23,12 @@ export const UserModule = {
         },
         SET_RECIPES(state, recipes) {
             state.recipes = recipes;
+        },
+        SET_SCREEN_WIDTH(state, screenWidth) {
+            state.screenWidth = screenWidth;
+        },
+        SET_SHOW_SIDEBAR(state, showSidebar) {
+            state.showSidebar = showSidebar;
         },
     },
 
@@ -49,6 +57,12 @@ export const UserModule = {
                 .then((data) => {
                     commit("SET_RECIPES", data);
                 });
+        },
+        setScreenWidth({ commit }, screenWidth) {
+            commit("SET_SCREEN_WIDTH", screenWidth);
+        },
+        setShowSidebar({ commit }, showSidebar) {
+            commit("SET_SHOW_SIDEBAR", showSidebar);
         },
     },
 };

@@ -2,6 +2,7 @@
     <el-row type="flex" justify="space-between" align="middle">
         <el-col :span="12">
             <el-row type="flex" align="middle" justify="start">
+                <el-button icon="el-icon-menu" type="primary" circle class="menuButton" v-if="screenWidth < 650" @click="toggleSidebar()"></el-button>
                 <router-link to="/" class="title">
                     Cookbook
                 </router-link>
@@ -47,6 +48,8 @@ export default {
         const router = useRouter();
         const store = useStore();
         const user = computed(() => store.state.User.user);
+        const screenWidth = computed(() => store.state.User.screenWidth);
+        const showSidebar = computed(() => store.state.User.showSidebar);
 
         const logout = () => {
             localStorage.removeItem("user");
@@ -54,15 +57,30 @@ export default {
             router.push("/");
         };
 
+        const toggleSidebar = () => {
+            if (showSidebar.value) {
+                store.dispatch("User/setShowSidebar", false);
+            } else {
+                store.dispatch("User/setShowSidebar", true);
+            }
+        };
+
         return {
             user,
             logout,
+            screenWidth,
+            toggleSidebar,
         };
     },
 };
 </script>
 
 <style lang="scss" scoped>
+.menuButton {
+    font-size: 25px;
+    padding: 8px 9px;
+    margin-right: 10px;
+}
 .title {
     color: white;
     font-size: 20px;

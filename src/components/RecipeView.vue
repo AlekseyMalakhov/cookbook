@@ -1,13 +1,13 @@
 <template>
     <div class="background" v-if="selectedRecipe">
-        <el-row type="flex" justify="center">
+        <el-row type="flex" justify="center" style="margin: auto 20px">
             <h2>{{ selectedRecipe.recipeName }}</h2>
         </el-row>
         <el-row type="flex" justify="space-between">
             <el-row type="flex" justify="start" style="flex-direction: column">
                 <el-row style="margin-left: 40px" type="flex" justify="start">
                     <div>
-                        <el-avatar :size="50" :src="''" class="avatar">
+                        <el-avatar :size="50" :src="`http://localhost:3000/images/avatars/${recipeCreatorImg}`" class="avatar">
                             <i class="el-icon-s-custom" />
                         </el-avatar>
                     </div>
@@ -29,7 +29,7 @@
                     </el-col>
                 </el-row>
             </el-row>
-            <el-row type="flex" justify="center">
+            <el-row type="flex" justify="center" style="margin: 20px 20px">
                 <el-col :span="12" class="imageContainer">
                     <img :src="`http://localhost:3000/images/${selectedRecipe.img}`" class="image" />
                 </el-col>
@@ -68,6 +68,7 @@ export default {
     setup() {
         const store = useStore();
         const user = computed(() => store.state.User.user);
+        const users = computed(() => store.state.User.users);
         const recipes = computed(() => store.state.User.recipes);
         const router = useRouter();
         const route = useRoute();
@@ -75,6 +76,11 @@ export default {
             return recipes.value.find((res) => res._id === route.params.recipe_id);
         });
         const centerDialogVisible = ref(false);
+
+        const recipeCreatorImg = computed(() => {
+            const creator = users.value.find((u) => u.name === selectedRecipe.value.user);
+            return creator.img;
+        });
 
         const deleteRecipe = () => {
             fetch(`http://localhost:3000/delete_recipe/${selectedRecipe.value._id}`, {
@@ -106,6 +112,7 @@ export default {
             user,
             deleteRecipe,
             editRecipe,
+            recipeCreatorImg,
         };
     },
 };

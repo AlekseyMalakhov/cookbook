@@ -167,12 +167,6 @@ app.put("/edit_recipe/:id", upload.single("img"), (req, res) => {
     editRecipe();
 });
 
-// //upload image
-// app.post("/upload_img", upload.single("recipe"), (req, res) => {
-//     const img = req.file;
-//     console.log(img);
-// });
-
 //start the server
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);

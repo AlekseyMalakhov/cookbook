@@ -1,24 +1,34 @@
 <template>
-    <el-form-item :label="label" prop="recipeForm" class="labelRecipe1 labelRecipe2">
-        <el-input v-model="state.name" @input="sendData($event)" placeholder="Ingredient"></el-input>
-        <el-input v-model="state.amount" @input="sendData($event, true)" class="amount" inputMode="numeric" placeholder="Amount"></el-input>
-        <el-select v-model="state.unit" @change="sendData($event)" placeholder="Unit" class="unit">
-            <el-option v-for="unit in props.units" :key="unit" :label="unit" :value="unit"></el-option>
-        </el-select>
-        <el-button
-            type="danger"
-            icon="el-icon-delete"
-            circle
-            style="margin-left: 20px"
-            @click="deleteIng()"
-            :class="label ? 'invisible' : ''"
-        ></el-button>
+    <el-form-item :label="'#' + (props.i + 1)" prop="recipeForm" class="labelIng1 labelIng2">
+        <el-row type="flex" gutter="20">
+            <el-col :xs="24" :sm="14" style="margin-top: 15px">
+                <el-input v-model="state.name" @input="sendData($event)" placeholder="Ingredient"></el-input>
+            </el-col>
+            <el-col :xs="24" :sm="4" style="margin-top: 15px">
+                <el-input v-model="state.amount" @input="sendData($event, true)" inputMode="numeric" placeholder="Amount"></el-input>
+            </el-col>
+            <el-col :xs="24" :sm="6" style="margin-top: 15px">
+                <div style="display: flex">
+                    <el-select v-model="state.unit" @change="sendData($event)" placeholder="Unit">
+                        <el-option v-for="unit in props.units" :key="unit" :label="unit" :value="unit"></el-option>
+                    </el-select>
+                    <el-button
+                        type="danger"
+                        icon="el-icon-delete"
+                        circle
+                        style="margin-left: 20px"
+                        @click="deleteIng()"
+                        :class="props.id === 1 ? 'invisible' : ''"
+                    ></el-button>
+                </div>
+            </el-col>
+        </el-row>
     </el-form-item>
 </template>
 
 <script>
 import { reactive } from "@vue/reactivity";
-import { computed, onMounted } from "@vue/runtime-core";
+import { onMounted } from "@vue/runtime-core";
 const allowOnlyNumbers = (text) => {
     const regex1 = /[^\d]/g;
     const onlyNumbers = text.replace(regex1, "");
@@ -40,19 +50,16 @@ export default {
             type: Object,
             required: false,
         },
+        i: {
+            type: Number,
+            required: true,
+        },
     },
     setup(props, ctx) {
         const state = reactive({
             name: "",
             amount: "",
             unit: "",
-        });
-
-        const label = computed(() => {
-            if (props.id === 1) {
-                return "Ingredients:";
-            }
-            return "";
         });
 
         onMounted(() => {
@@ -81,7 +88,6 @@ export default {
             props,
             sendData,
             state,
-            label,
             deleteIng,
         };
     },
@@ -89,27 +95,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.labelRecipe1.labelRecipe2 {
+.labelIng1.labelIng2 {
     display: flex;
     flex-direction: column;
 }
 
-.labelRecipe1.labelRecipe2 .el-form-item__content {
+.labelIng1.labelIng2::v-deep .el-form-item__content {
     display: flex;
 }
 
-.labelRecipe1.labelRecipe2 label {
+.labelIng1.labelIng2::v-deep .el-form-item__label {
+    line-height: normal;
+    margin-bottom: -10px;
+}
+
+.labelIng1.labelIng2::v-deep label {
     padding-bottom: 0;
-}
-
-.amount {
-    width: 200px;
-    margin-left: 20px;
-}
-
-.unit {
-    width: 200px;
-    margin-left: 20px;
 }
 
 .invisible {

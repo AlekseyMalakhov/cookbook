@@ -1,5 +1,5 @@
 <template>
-    <div v-if="selectedRecipe">
+    <div v-if="selectedRecipe" style="margin: auto 20px">
         <el-row type="flex" justify="center" align="middle">
             <h2>Edit recipe {{ selectedRecipe.recipeName }}</h2>
         </el-row>
@@ -8,9 +8,10 @@
                 <el-form-item label="Recipe name" prop="recipeName" class="labelRecipe1 labelRecipe2">
                     <el-input v-model="state.recipe.recipeName"></el-input>
                 </el-form-item>
-
+                <div style="font-size: 14px; color: #606266; margin-bottom: 15px">Ingredients:</div>
                 <AddIngredientField
-                    v-for="ing in state.recipe.recipeIngredients"
+                    v-for="(ing, i) in state.recipe.recipeIngredients"
+                    :i="i"
                     :key="ing.id"
                     :id="ing.id"
                     :units="units"
@@ -32,14 +33,7 @@
                 <el-row type="flex" justify="center" align="middle" style="margin-bottom: 20px">
                     <div class="imageLable">Image:</div>
                     <el-form-item>
-                        <el-upload
-                            class="imgUpload1 imgUpload2"
-                            drag
-                            action="http://localhost:3000/upload_img"
-                            :on-change="handleImgUpload"
-                            multiple
-                            :auto-upload="false"
-                        >
+                        <el-upload class="imgUpload1 imgUpload2" drag action="" :on-change="handleImgUpload" multiple :auto-upload="false">
                             <i class="el-icon-upload"></i>
                             <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
                             <template #tip>
@@ -224,24 +218,15 @@ export default {
 .labelRecipe1.labelRecipe2 {
     display: flex;
     flex-direction: column;
+    margin-bottom: 30px;
 }
 
-.labelRecipe1.labelRecipe2 .el-form-item__content {
+.labelRecipe1.labelRecipe2::v-deep .el-form-item__content {
     display: flex;
 }
 
-.labelRecipe1.labelRecipe2 label {
+.labelRecipe1.labelRecipe2::v-deep label {
     padding-bottom: 0;
-}
-
-.amount {
-    width: 200px;
-    margin-left: 20px;
-}
-
-.unit {
-    width: 200px;
-    margin-left: 20px;
 }
 
 .signUp {
@@ -255,7 +240,7 @@ export default {
     margin-bottom: 40px;
 }
 
-.imgUpload1.imgUpload2 .el-upload__tip {
+.imgUpload1.imgUpload2::v-deep .el-upload__tip {
     line-height: 10px;
     margin-top: 0;
 }

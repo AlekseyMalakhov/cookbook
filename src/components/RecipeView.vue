@@ -38,7 +38,12 @@
         <el-row justify="start" style="padding: 40px 20px 20px 20px">
             {{ selectedRecipe.recipeText }}
         </el-row>
-        <el-row type="flex" justify="end" style="margin-right: 30px; margin-top: 20px" v-if="user && user._id === selectedRecipe.userID">
+        <el-row
+            type="flex"
+            justify="end"
+            style="margin-right: 30px; margin-top: 20px; padding-bottom: 30px"
+            v-if="user && user._id === selectedRecipe.userID"
+        >
             <el-button type="primary" round @click="editRecipe()">Edit</el-button>
             <el-button type="danger" round @click="centerDialogVisible = true">Delete</el-button>
         </el-row>

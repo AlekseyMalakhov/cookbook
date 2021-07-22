@@ -30,9 +30,9 @@
                     <el-input type="textarea" :autosize="{ minRows: 4 }" placeholder="Please input" v-model="state.recipe.recipeText"> </el-input>
                 </el-form-item>
 
+                <div class="imageLable">Image:</div>
                 <el-row type="flex" justify="center" align="middle" style="margin-bottom: 20px">
-                    <div class="imageLable">Image:</div>
-                    <el-form-item>
+                    <el-form-item style="width: 100%">
                         <el-upload class="imgUpload1 imgUpload2" drag action="" :on-change="handleImgUpload" multiple :auto-upload="false">
                             <i class="el-icon-upload"></i>
                             <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
@@ -236,12 +236,19 @@ export default {
 .imageLable {
     font-size: 14px;
     color: #606266;
-    margin-right: 20px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
 .imgUpload1.imgUpload2::v-deep .el-upload__tip {
     line-height: 10px;
     margin-top: 0;
+}
+
+.imgUpload1.imgUpload2::v-deep .el-upload {
+    width: 100%;
+}
+
+.imgUpload1.imgUpload2::v-deep .el-upload-dragger {
+    width: auto;
 }
 </style>

@@ -11,6 +11,7 @@
     "@aws-sdk/client-s3": "^3.22.0",
     "aws-sdk": "^2.952.0",
     "bson": "^1.1.6",
+    "connect-history-api-fallback": "^1.6.0",
     "core-js": "^3.6.5",
     "cors": "^2.8.5",
     "dotenv": "^8.6.0",

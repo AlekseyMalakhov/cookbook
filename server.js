@@ -5,8 +5,10 @@ const multerS3 = require("multer-s3");
 const app = express();
 const port = 3000;
 const cors = require("cors");
+const history = require("connect-history-api-fallback");
 app.use(cors());
 app.use(express.json());
+app.use(history());
 
 //Amazon
 const AWS = require("aws-sdk");
@@ -29,8 +31,6 @@ const uploadImgToAmazon = multer({
     }),
 });
 //end Amazon
-
-app.use("/images", express.static("uploads"));
 
 //DB account info
 //login - megauser
@@ -58,6 +58,14 @@ async function connectToDB() {
     }
 }
 connectToDB().catch(console.dir);
+
+//only for production build
+app.use(express.static(__dirname + "/dist"));
+
+app.get("*", function(req, res) {
+    res.sendFile(__dirname + "/dist/index.html");
+});
+//end for production build
 
 //create account
 app.post("/create_account", uploadImgToAmazon.single("img"), (req, res) => {

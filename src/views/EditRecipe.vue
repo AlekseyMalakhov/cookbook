@@ -112,7 +112,7 @@ export default {
             state.recipe.recipeText = selectedRecipe.value.recipeText;
             state.recipe.recipeIngredients = selectedRecipe.value.recipeIngredients;
             state.recipe.img = selectedRecipe.value.img;
-            imgURL.value = `http://localhost:3000/images/${selectedRecipe.value.img}`;
+            imgURL.value = selectedRecipe.value.img;
         };
 
         onMounted(() => {

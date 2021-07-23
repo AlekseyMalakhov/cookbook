@@ -2,7 +2,6 @@ require("dotenv").config({ path: "../cookbook_env/.env" });
 const express = require("express");
 const multer = require("multer");
 const multerS3 = require("multer-s3");
-const uploadAvatar = multer({ dest: "uploads/avatars/" });
 const app = express();
 const port = 3000;
 const cors = require("cors");
@@ -10,15 +9,6 @@ app.use(cors());
 app.use(express.json());
 
 //Amazon
-// const { S3Client } = require("@aws-sdk/client-s3");
-// const s3Client = new S3Client({
-//     region: "eu-central-1",
-//     credentials: {
-//         accessKeyId: process.env.accessKeyId,
-//         secretAccessKey: process.env.secretAccessKey,
-//     },
-// });
-
 const AWS = require("aws-sdk");
 const s3 = new AWS.S3({
     region: "eu-central-1",
@@ -28,7 +18,7 @@ const s3 = new AWS.S3({
     },
 });
 
-const upload = multer({
+const uploadImgToAmazon = multer({
     storage: multerS3({
         s3: s3,
         bucket: "cookingimages2",
@@ -38,7 +28,6 @@ const upload = multer({
         },
     }),
 });
-
 //end Amazon
 
 app.use("/images", express.static("uploads"));
@@ -71,9 +60,9 @@ async function connectToDB() {
 connectToDB().catch(console.dir);
 
 //create account
-app.post("/create_account", uploadAvatar.single("img"), (req, res) => {
+app.post("/create_account", uploadImgToAmazon.single("img"), (req, res) => {
     const newAccount = JSON.parse(req.body.text);
-    newAccount.img = req.file.filename;
+    newAccount.img = req.file.location;
 
     //check if username is free
     async function checkForExisting() {
@@ -157,10 +146,9 @@ app.get("/recipes", (req, res) => {
 });
 
 //create recipe
-app.post("/create_recipe", upload.single("img"), (req, res) => {
+app.post("/create_recipe", uploadImgToAmazon.single("img"), (req, res) => {
     const newRecipe = JSON.parse(req.body.text);
     newRecipe.img = req.file.location;
-    console.log(newRecipe);
 
     async function createRecipe() {
         const result = await collectionRecipes.insertOne(newRecipe);
@@ -187,9 +175,9 @@ app.delete("/delete_recipe/:id", (req, res) => {
 });
 
 //edit recipe
-app.put("/edit_recipe/:id", upload.single("img"), (req, res) => {
+app.put("/edit_recipe/:id", uploadImgToAmazon.single("img"), (req, res) => {
     const updatedRecipe = JSON.parse(req.body.text);
-    updatedRecipe.img = req.file.filename;
+    updatedRecipe.img = req.file.location;
     const id = req.params.id;
     const query = {
         _id: new ObjectId(id),

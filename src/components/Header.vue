@@ -15,7 +15,7 @@
                 </router-link>
 
                 <el-dropdown trigger="click">
-                    <el-avatar :size="50" :src="`http://localhost:3000/images/avatars/${user.img}`" fit="fill" class="avatar">
+                    <el-avatar :size="50" :src="user.img" fit="fill" class="avatar">
                         <i class="el-icon-s-custom" />
                     </el-avatar>
                     <template #dropdown>

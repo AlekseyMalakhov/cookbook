@@ -7,7 +7,7 @@
             <el-row type="flex" justify="start" style="flex-direction: column">
                 <el-row style="margin-left: 40px" type="flex" justify="start">
                     <div>
-                        <el-avatar :size="50" :src="`http://localhost:3000/images/avatars/${recipeCreatorImg}`" class="avatar">
+                        <el-avatar :size="50" :src="recipeCreatorImg" class="avatar">
                             <i class="el-icon-s-custom" />
                         </el-avatar>
                     </div>

@@ -134,7 +134,7 @@ export default {
 
         const send = (recipeObj) => {
             const obj = { ...recipeObj };
-            delete obj.img;
+            //delete obj.img;
             obj.userID = user.value._id;
             const date = new Date(Date.now());
             const dateString = date.toLocaleDateString("en-GB");
@@ -143,7 +143,7 @@ export default {
             const JSONObj = JSON.stringify(obj);
             const recipe = {
                 text: JSONObj,
-                img: state.recipe.img ? state.recipe.img : img.value,
+                img: img.value,
             };
             const formData = new FormData();
             for (let x in recipe) {

@@ -177,7 +177,9 @@ app.delete("/delete_recipe/:id", (req, res) => {
 //edit recipe
 app.put("/edit_recipe/:id", uploadImgToAmazon.single("img"), (req, res) => {
     const updatedRecipe = JSON.parse(req.body.text);
-    updatedRecipe.img = req.file.location;
+    if (req.file) {
+        updatedRecipe.img = req.file.location;
+    }
     const id = req.params.id;
     const query = {
         _id: new ObjectId(id),

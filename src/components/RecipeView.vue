@@ -49,7 +49,7 @@
         </el-row>
     </div>
 
-    <el-dialog title="Warning" v-model="centerDialogVisible" width="25%" center>
+    <el-dialog title="Warning" v-model="centerDialogVisible" :width="320" center>
         <div style="display: flex; justify-content: center">
             <span>Do you realy want to delete this recipe?</span>
         </div>

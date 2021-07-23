@@ -1,3 +1,4 @@
+require("dotenv").config({ path: "../cookbook_env/.env" });
 const express = require("express");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
@@ -7,6 +8,36 @@ const port = 3000;
 const cors = require("cors");
 app.use(cors());
 app.use(express.json());
+
+//Amazon
+const { S3Client } = require("@aws-sdk/client-s3");
+const { ListObjectsCommand } = require("@aws-sdk/client-s3");
+const REGION = "eu-central-1";
+
+const s3Client = new S3Client({
+    region: REGION,
+    credentials: {
+        accessKeyId: process.env.accessKeyId,
+        secretAccessKey: process.env.secretAccessKey,
+    },
+});
+
+const bucketParams = {
+    Bucket: "cookingimages",
+};
+
+const getBucket = async () => {
+    try {
+        const data = await s3Client.send(new ListObjectsCommand(bucketParams));
+        console.log("Success", data.Contents);
+        return data; // For unit tests.
+    } catch (err) {
+        console.log("Error", err);
+    }
+};
+getBucket();
+
+//end Amazon
 
 app.use("/images", express.static("uploads"));
 
@@ -23,7 +54,7 @@ const client = new MongoClient(uri, {
 //connect to DB
 let collectionUsers;
 let collectionRecipes;
-async function run() {
+async function connectToDB() {
     try {
         await client.connect();
         console.log("Connected correctly to server");
@@ -35,7 +66,7 @@ async function run() {
         //await client.close();
     }
 }
-run().catch(console.dir);
+connectToDB().catch(console.dir);
 
 //create account
 app.post("/create_account", uploadAvatar.single("img"), (req, res) => {

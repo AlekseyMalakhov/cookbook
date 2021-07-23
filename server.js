@@ -1,7 +1,7 @@
 require("dotenv").config({ path: "../cookbook_env/.env" });
 const express = require("express");
 const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
+const multerS3 = require("multer-s3");
 const uploadAvatar = multer({ dest: "uploads/avatars/" });
 const app = express();
 const port = 3000;
@@ -10,32 +10,34 @@ app.use(cors());
 app.use(express.json());
 
 //Amazon
-const { S3Client } = require("@aws-sdk/client-s3");
-const { ListObjectsCommand } = require("@aws-sdk/client-s3");
-const REGION = "eu-central-1";
+// const { S3Client } = require("@aws-sdk/client-s3");
+// const s3Client = new S3Client({
+//     region: "eu-central-1",
+//     credentials: {
+//         accessKeyId: process.env.accessKeyId,
+//         secretAccessKey: process.env.secretAccessKey,
+//     },
+// });
 
-const s3Client = new S3Client({
-    region: REGION,
+const AWS = require("aws-sdk");
+const s3 = new AWS.S3({
+    region: "eu-central-1",
     credentials: {
         accessKeyId: process.env.accessKeyId,
         secretAccessKey: process.env.secretAccessKey,
     },
 });
 
-const bucketParams = {
-    Bucket: "cookingimages",
-};
-
-const getBucket = async () => {
-    try {
-        const data = await s3Client.send(new ListObjectsCommand(bucketParams));
-        console.log("Success", data.Contents);
-        return data; // For unit tests.
-    } catch (err) {
-        console.log("Error", err);
-    }
-};
-getBucket();
+const upload = multer({
+    storage: multerS3({
+        s3: s3,
+        bucket: "cookingimages2",
+        acl: "public-read",
+        key: function(req, file, cb) {
+            cb(null, Date.now().toString() + "_" + file.originalname);
+        },
+    }),
+});
 
 //end Amazon
 
@@ -157,7 +159,8 @@ app.get("/recipes", (req, res) => {
 //create recipe
 app.post("/create_recipe", upload.single("img"), (req, res) => {
     const newRecipe = JSON.parse(req.body.text);
-    newRecipe.img = req.file.filename;
+    newRecipe.img = req.file.location;
+    console.log(newRecipe);
 
     async function createRecipe() {
         const result = await collectionRecipes.insertOne(newRecipe);

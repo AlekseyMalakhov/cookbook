@@ -1,6 +1,6 @@
 <template>
     <el-card :body-style="{ padding: '0px' }" @click="showRecipe()">
-        <img :src="`http://localhost:3000/images/${recipe.img}`" class="image" />
+        <img :src="recipe.img" class="image" />
         <div style="padding: 14px;" class="info">
             <div class="user">{{ recipe.user }}</div>
             <span>{{ recipe.recipeName }}</span>

@@ -31,7 +31,7 @@
             </el-row>
             <el-row type="flex" justify="center" style="margin: 20px 20px">
                 <el-col :span="12" class="imageContainer">
-                    <img :src="`http://localhost:3000/images/${selectedRecipe.img}`" class="image" />
+                    <img :src="selectedRecipe.img" class="image" />
                 </el-col>
             </el-row>
         </el-row>

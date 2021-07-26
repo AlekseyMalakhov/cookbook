@@ -3,7 +3,7 @@
         <h2>Create account</h2>
     </el-row>
     <el-row type="flex" justify="center" align="middle">
-        <el-form :model="state.login" :rules="state.rules" ref="loginForm" label-width="120px" label-position="top">
+        <el-form :model="state.login" :rules="state.rules" ref="loginForm" label-position="top" style="min-width: 300px">
             <el-form-item label="Create your username" prop="name" class="labelLogin1 labelLogin2">
                 <el-input v-model="state.login.name" class="loginInput" @keyup.enter="() => submitForm()"></el-input>
             </el-form-item>
@@ -17,7 +17,7 @@
             <el-row type="flex" justify="center" style="margin-bottom: 20px; flex-direction: column">
                 <div class="imageLable">Image:</div>
                 <el-form-item>
-                    <el-upload class="imgUpload1 imgUpload2" drag :on-change="handleImgUpload" multiple :auto-upload="false">
+                    <el-upload class="imgUpload1 imgUpload2" action="" drag :on-change="handleImgUpload" multiple :auto-upload="false">
                         <i class="el-icon-upload"></i>
                         <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
                         <template #tip>
@@ -29,7 +29,7 @@
                 </el-form-item>
             </el-row>
 
-            <el-row type="flex" justify="space-around" align="middle">
+            <el-row type="flex" justify="space-around" align="middle" style="margin-bottom: 30px">
                 <el-button type="primary" @click="submitForm()">Create</el-button>
                 <el-button @click="cancel()">Cancel</el-button>
             </el-row>
@@ -138,5 +138,21 @@ export default {
 .imgUpload1.imgUpload2 .el-upload__tip {
     line-height: 10px;
     margin-top: 0;
+}
+.imgUpload1.imgUpload2::v-deep .el-upload__tip {
+    line-height: 10px;
+    margin-top: 0;
+}
+
+.imgUpload1.imgUpload2::v-deep .el-upload {
+    width: 100%;
+}
+
+.imgUpload1.imgUpload2::v-deep .el-upload-dragger {
+    width: auto;
+}
+
+.preview::v-deep img {
+    width: auto;
 }
 </style>

@@ -42,13 +42,19 @@ export default {
                 return width;
             };
             store.dispatch("User/setScreenWidth", getScreenWidth());
-            window.onresize = () => {
+
+            const adjustSidebar = () => {
                 const width = getScreenWidth();
                 if (width < 650) {
                     store.dispatch("User/setShowSidebar", false);
                 } else {
                     store.dispatch("User/setShowSidebar", true);
                 }
+            };
+            adjustSidebar();
+
+            window.onresize = () => {
+                adjustSidebar();
                 store.dispatch("User/setScreenWidth", getScreenWidth());
             };
         });

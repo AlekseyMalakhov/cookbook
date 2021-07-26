@@ -62,5 +62,8 @@ export default {
     bottom: 100px;
     right: 50px;
     font-size: 25px;
+    @media screen and (max-width: 650px) {
+        right: 20px;
+    }
 }
 </style>

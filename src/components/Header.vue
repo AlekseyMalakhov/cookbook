@@ -2,7 +2,14 @@
     <el-row type="flex" justify="space-between" align="middle">
         <el-col :span="12">
             <el-row type="flex" align="middle" justify="start">
-                <el-button icon="el-icon-menu" type="primary" circle class="menuButton" v-if="screenWidth < 650" @click="toggleSidebar()"></el-button>
+                <el-button
+                    icon="el-icon-menu"
+                    type="primary"
+                    circle
+                    class="menuButton"
+                    v-if="screenWidth < 650 && showMenu"
+                    @click="toggleSidebar()"
+                ></el-button>
                 <router-link to="/" class="title">
                     Cookbook
                 </router-link>
@@ -40,16 +47,23 @@
 <script>
 import { computed } from "vue";
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 
 export default {
     name: "Header",
     setup() {
         const router = useRouter();
+        const route = useRoute();
         const store = useStore();
         const user = computed(() => store.state.User.user);
         const screenWidth = computed(() => store.state.User.screenWidth);
         const showSidebar = computed(() => store.state.User.showSidebar);
+        const showMenu = computed(() => {
+            if (route.path === "/login" || route.path === "/create_account") {
+                return false;
+            }
+            return true;
+        });
 
         const logout = () => {
             localStorage.removeItem("user");
@@ -70,6 +84,7 @@ export default {
             logout,
             screenWidth,
             toggleSidebar,
+            showMenu,
         };
     },
 };

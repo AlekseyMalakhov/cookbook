@@ -10,8 +10,6 @@ app.use(cors());
 app.use(express.json());
 app.use(history());
 
-console.log(process.env);
-
 //Amazon
 const AWS = require("aws-sdk");
 const s3 = new AWS.S3({

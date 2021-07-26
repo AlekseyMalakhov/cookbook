@@ -1,4 +1,5 @@
 import baseURL from "../baseURL";
+console.log(baseURL);
 export const UserModule = {
     namespaced: true,
 

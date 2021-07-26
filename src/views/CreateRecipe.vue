@@ -64,6 +64,7 @@ import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { showError, showSuccess } from "../utilities";
 import AddIngredientField from "../components/AddIngredientField.vue";
+import baseURL from "../baseURL";
 
 let ingID = 2;
 
@@ -114,7 +115,7 @@ export default {
                 formData.append(x, recipe[x]);
             }
 
-            fetch("http://localhost:3000/create_recipe", {
+            fetch(baseURL + "/create_recipe", {
                 method: "POST",
                 body: formData,
             })

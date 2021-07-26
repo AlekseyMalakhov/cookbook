@@ -17,14 +17,7 @@
             <el-row type="flex" justify="center" style="margin-bottom: 20px; flex-direction: column">
                 <div class="imageLable">Image:</div>
                 <el-form-item>
-                    <el-upload
-                        class="imgUpload1 imgUpload2"
-                        drag
-                        action="http://localhost:3000/upload_img"
-                        :on-change="handleImgUpload"
-                        multiple
-                        :auto-upload="false"
-                    >
+                    <el-upload class="imgUpload1 imgUpload2" drag :on-change="handleImgUpload" multiple :auto-upload="false">
                         <i class="el-icon-upload"></i>
                         <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
                         <template #tip>
@@ -48,6 +41,7 @@
 import { ref, reactive } from "@vue/reactivity";
 import { useRouter } from "vue-router";
 import { showError, showSuccess } from "../utilities";
+import baseURL from "../baseURL";
 
 export default {
     setup() {
@@ -85,7 +79,7 @@ export default {
                 formData.append(x, newAccount[x]);
             }
 
-            fetch("http://localhost:3000/create_account", {
+            fetch(baseURL + "/create_account", {
                 method: "POST",
                 body: formData,
             })
@@ -145,5 +139,4 @@ export default {
     line-height: 10px;
     margin-top: 0;
 }
-//classes look at the Login component
 </style>

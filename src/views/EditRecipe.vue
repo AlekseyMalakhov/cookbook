@@ -66,6 +66,7 @@ import { useStore } from "vuex";
 import { showError, showSuccess } from "../utilities";
 import AddIngredientField from "../components/AddIngredientField.vue";
 import { onMounted, onUpdated } from "@vue/runtime-core";
+import baseURL from "../baseURL";
 
 const getID = (recipeIngredients) => {
     const idList = [];
@@ -150,7 +151,7 @@ export default {
                 formData.append(x, recipe[x]);
             }
 
-            fetch(`http://localhost:3000/edit_recipe/${selectedRecipe.value._id}`, {
+            fetch(`${baseURL}/edit_recipe/${selectedRecipe.value._id}`, {
                 method: "PUT",
                 body: formData,
             })

@@ -10,6 +10,8 @@ app.use(cors());
 app.use(express.json());
 app.use(history());
 
+console.log(process.env);
+
 //Amazon
 const AWS = require("aws-sdk");
 const s3 = new AWS.S3({
@@ -117,7 +119,7 @@ app.post("/login", (req, res) => {
 });
 
 //get all users
-app.get("/users", (req, res) => {
+app.post("/get_users", (req, res) => {
     async function getAllUsers() {
         const cursor = await collectionUsers.find();
         const arr = await cursor.toArray();
@@ -136,7 +138,7 @@ app.get("/users", (req, res) => {
 });
 
 //get all recipes
-app.get("/recipes", (req, res) => {
+app.post("/get_recipes", (req, res) => {
     async function getAllRecipes() {
         const cursor = await collectionRecipes.find();
         const arr = await cursor.toArray();
@@ -202,5 +204,5 @@ app.put("/edit_recipe/:id", uploadImgToAmazon.single("img"), (req, res) => {
 
 //start the server
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
+    console.log(`Cookbook app listening at port ${port}`);
 });

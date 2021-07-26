@@ -27,6 +27,7 @@ import { ref, reactive } from "@vue/reactivity";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { showError } from "../utilities";
+import baseURL from "../baseURL";
 
 export default {
     setup() {
@@ -47,7 +48,7 @@ export default {
         const loginForm = ref(null);
 
         const send = (credentials) => {
-            fetch("http://localhost:3000/login", {
+            fetch(baseURL + "/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

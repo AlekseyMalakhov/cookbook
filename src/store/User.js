@@ -1,3 +1,4 @@
+import baseURL from "../baseURL";
 export const UserModule = {
     namespaced: true,
 
@@ -41,7 +42,9 @@ export const UserModule = {
             commit("SET_SELECTED_USER", selectedUser);
         },
         getAllUsers({ commit }) {
-            fetch("http://localhost:3000/users")
+            fetch(baseURL + "/get_users", {
+                method: "POST",
+            })
                 .then((response) => {
                     return response.json();
                 })
@@ -50,7 +53,9 @@ export const UserModule = {
                 });
         },
         getAllRecipes({ commit }) {
-            fetch("http://localhost:3000/recipes")
+            fetch(baseURL + "/get_recipes", {
+                method: "POST",
+            })
                 .then((response) => {
                     return response.json();
                 })

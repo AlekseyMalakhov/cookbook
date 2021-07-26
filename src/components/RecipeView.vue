@@ -69,6 +69,7 @@ import { useRoute } from "vue-router";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 import { showError, showSuccess } from "../utilities";
+import baseURL from "../baseURL";
 export default {
     setup() {
         const store = useStore();
@@ -88,7 +89,7 @@ export default {
         });
 
         const deleteRecipe = () => {
-            fetch(`http://localhost:3000/delete_recipe/${selectedRecipe.value._id}`, {
+            fetch(`${baseURL}/delete_recipe/${selectedRecipe.value._id}`, {
                 method: "DELETE",
             })
                 .then((response) => {

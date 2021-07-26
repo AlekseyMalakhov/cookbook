@@ -38,9 +38,6 @@
         "eslint-plugin-vue": "^7.0.0",
         "prettier": "1.19.1"
     },
-    "optionalDependencies": {
-        "fsevents": "2.1.2"
-    },
     "eslintConfig": {
         "root": true,
         "env": {

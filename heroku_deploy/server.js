@@ -1,4 +1,4 @@
-require("dotenv").config({ path: "../cookbook_env/.env" });
+require("dotenv").config({ path: "../../cookbook_env/.env" });
 const express = require("express");
 const multer = require("multer");
 const multerS3 = require("multer-s3");

@@ -30,9 +30,10 @@
                 </el-row>
             </el-row>
             <el-row type="flex" justify="center" style="margin: 20px 20px">
-                <el-col :span="12" class="imageContainer">
+                <el-col :span="12" class="imageContainer" v-if="screenWidth >= 900">
                     <img :src="selectedRecipe.img" class="image" />
                 </el-col>
+                <img :src="selectedRecipe.img" style="width: 100%" v-else />
             </el-row>
         </el-row>
         <el-row justify="start" style="padding: 40px 20px 20px 20px">
@@ -76,6 +77,7 @@ export default {
         const user = computed(() => store.state.User.user);
         const users = computed(() => store.state.User.users);
         const recipes = computed(() => store.state.User.recipes);
+        const screenWidth = computed(() => store.state.User.screenWidth);
         const router = useRouter();
         const route = useRoute();
         const selectedRecipe = computed(() => {
@@ -119,6 +121,7 @@ export default {
             deleteRecipe,
             editRecipe,
             recipeCreatorImg,
+            screenWidth,
         };
     },
 };

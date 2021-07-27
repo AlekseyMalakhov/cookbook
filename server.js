@@ -70,7 +70,11 @@ app.get("*", function(req, res) {
 //create account
 app.post("/create_account", uploadImgToAmazon.single("img"), (req, res) => {
     const newAccount = JSON.parse(req.body.text);
-    newAccount.img = req.file.location;
+    if (req.file) {
+        newAccount.img = req.file.location;
+    } else {
+        newAccount.img = "";
+    }
 
     //check if username is free
     async function checkForExisting() {
